@@ -1,0 +1,35 @@
+import styled from "styled-components";
+import FlexContainer from "../FlexContainer";
+import THEME from '../../../utils/styledTheme';
+
+const Dot = styled.span`
+    height: 10px;
+    width: 10px;
+    background-color: #ffa414;
+    border-radius: 50%;
+    display: inline-block;
+    margin: 0 10px;
+    @media only screen and (max-width: 768px) {
+        height: 6px;
+        width: 6px;
+    }
+`
+
+const Line = styled.hr`
+    background-color: ${THEME.colors.primary};
+    height: 2px;
+    width: 10%;
+    opacity: 0.75;
+`
+
+const Breaker = () => {
+    return (
+        <FlexContainer width="100%" justify="center" alignItems="center" margin="40px 0">
+            <Line />
+            <Dot />
+            <Line />
+        </FlexContainer>
+    )
+}
+
+export default Breaker;
