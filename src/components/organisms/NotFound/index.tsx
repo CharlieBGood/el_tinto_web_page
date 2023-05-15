@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
 import ContentContainer from "../../atoms/ContentContainer";
 import { Button } from "react-bootstrap";
-import THEME from '../../../utils/styledTheme';
 
 const NotFound = () => {
     return(
@@ -23,7 +22,7 @@ const NotFound = () => {
             </Typography>
             <Button 
                 variant="contained"
-                style={{margin: '20px 0 0 0', backgroundColor: THEME.colors.buttonColor, color: "#FFFFFF"}}
+                style={{margin: '20px 0 0 0'}}
             >
                 El Tinto de hoy ☕
             </Button>
