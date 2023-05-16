@@ -1,17 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import ContentContainer from "../../atoms/ContentContainer";
 import { Button, Typography } from "@mui/material";
-import styled from "styled-components";
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
-
-
-const EmailProviderButton = styled(Button)`
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 4px 12px;
-    border-radius: 12px;
-    :hover {
-        box-shadow: rgba(0, 0, 0, 1) 0px 4px 12px;
-    }
-`
 
 
 const SuscribeConfirm = () => {
@@ -46,7 +36,7 @@ const SuscribeConfirm = () => {
                     </Typography>
                 )
             }
-            <EmailProviderButton 
+            <Button 
                 variant="contained"
                 style={{padding: '15px', marginTop: '30px'}}
                 onClick={SendToEmailProvider}
@@ -58,7 +48,7 @@ const SuscribeConfirm = () => {
                 />
                     Abrir {searchParams.get('email_provider')}
                 <OpenInNewIcon style={{color: "#FFF", margin: "0 0 0 10px"}}/>
-            </EmailProviderButton>
+            </Button>
         </ContentContainer>
     )
 }

@@ -136,7 +136,6 @@ const ChangeDaysForm: React.FC<ChangeDaysFormProps> = ({setPageState}) => {
                 <FlexContainer margin="5px 0 0 0" width='100%' direction={windowWidth > 768 ? 'row' : 'column'}>
                     <Button 
                         variant="contained" type={'submit'}
-                        sx={{}} 
                         style={{
                             width: '100%', 
                             margin: windowWidth > 768 ? '20px 20px 0 0' : '20px 0 10px 0', 
