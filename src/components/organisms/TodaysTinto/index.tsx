@@ -3,7 +3,8 @@ import { getTemplates, getMail } from "../../../services";
 import { useEffect, useState } from "react";
 import FlexContainer from "../../atoms/FlexContainer";
 import { Toaster, toast } from "react-hot-toast";
-import { useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 
 const TintoContainer = styled(FlexContainer)`
@@ -17,6 +18,7 @@ const TodaysTinto = () => {
     
     const [template, setTemplate] = useState<string>('')
     const [searchParams] = useSearchParams();
+    const [showSpinner, setShowSpinner] = useState<boolean>(true)
 
     useEffect(() => {
         getTemplates()
@@ -24,6 +26,12 @@ const TodaysTinto = () => {
         .catch(error => {toast.error('Hubo un error en la página 😔')})
 
     }, [])
+
+    const Spinner = () => {
+        return(
+            <CircularProgress sx={{margin: "auto 0"}} />
+        )
+    }
 
     useEffect(() => {
         if (template !== '') {
@@ -40,15 +48,24 @@ const TodaysTinto = () => {
             }
 
             getMail({date: date})
-            .then((response: any) => {setTemplate(template.replace('{{html}}', response.data.results[0].html))})
-            .catch((error: any) => {console.log(error)})
+            .then((response: any) => {
+                setTemplate(template.replace('{{html}}', response.data.results[0].html))
+                setShowSpinner(false)
+            })
+            .catch(error => {toast.error('Hubo un error en la página 😔')})
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [template])
 
     return (
-        <TintoContainer>
-            <div dangerouslySetInnerHTML={{__html: template}} />
+        <TintoContainer alignItems="center" height="70vh">
+            {
+                showSpinner ? (
+                    <Spinner />
+                ) : (
+                    <div dangerouslySetInnerHTML={{__html: template}} />
+                )
+            }
             <Toaster
                 position="bottom-right"
                 reverseOrder={false}
