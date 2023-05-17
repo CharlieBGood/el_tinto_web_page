@@ -15,6 +15,7 @@ import ChangeDays from "../../components/organisms/ChangeDays";
 import ChangeDaysConfirm from "../../components/organisms/ChangeDaysConfirm";
 import Unsuscribe from "../../components/organisms/Unsuscribe";
 import ReferralHub from "../../components/organisms/ReferralHub";
+import TodaysTintoRedirect from "../../components/organisms/TodaysTintoRedirect";
 
 
 const router = createBrowserRouter([
@@ -41,6 +42,18 @@ const router = createBrowserRouter([
   {
     path: 'el-tinto-de-hoy',
     element: <TodaysTinto />
+  },
+  {
+    path: 'el-tinto-de-hoy',
+    element: <TodaysTinto />
+  },
+  {
+    path: 'el-tinto',
+    element: <TodaysTintoRedirect />
+  },
+  {
+    path: 'el_tinto',
+    element: <TodaysTintoRedirect />
   },
   {
     path: 'desuscribirse/personalizar',
