@@ -15,6 +15,8 @@ const SuscribeConfirm = () => {
         window.location.replace(emailProviderLink);
     }
 
+    const emailProvider: string = searchParams.get("email_provider") || "tu correo";
+
     return(
         <ContentContainer alignItems="center">
             <img 
@@ -29,7 +31,7 @@ const SuscribeConfirm = () => {
                 Pronto recibirás un correo de bienvenida para que empieces a degustarnos todas las mañanas.
             </Typography>
             {
-                searchParams.get('email_provider') !== 'gmail' && (
+                searchParams.get('email_provider') !== 'Gmail' && (
                     <Typography variant="body1" textAlign="center" style={{marginTop: '10px'}}>
                         Si no te llegó a la carpeta principal <strong style={{color: 'red'}}>abre
                         spam solo por esta vez</strong> y sigue las instrucciones.
@@ -41,12 +43,17 @@ const SuscribeConfirm = () => {
                 style={{padding: '15px', marginTop: '30px'}}
                 onClick={SendToEmailProvider}
             >
-                <img
-                    src={`https://el-tinto-utils.s3.amazonaws.com/${searchParams.get('email_provider')}_icon.png`}
-                    style={{width: '30px', margin: '0 10px 0 0'}}
-                    alt='email provider'
-                />
-                    Abrir {searchParams.get('email_provider')}
+                {
+                    (emailProvider === "gmail" || emailProvider === "outlook" || emailProvider === "yahoo")
+                    && (
+                        <img
+                            src={`/images/utils/${emailProvider}_icon.png`}
+                            style={{width: '30px', margin: '0 10px 0 0'}}
+                            alt='email provider'
+                        />
+                    )
+                }
+                    Abrir {emailProvider.charAt(0).toUpperCase() + emailProvider.slice(1).toLocaleLowerCase()}
                 <OpenInNewIcon style={{color: "#FFF", margin: "0 0 0 10px"}}/>
             </Button>
         </ContentContainer>
