@@ -23,13 +23,14 @@ const TodaysTinto = () => {
     useEffect(() => {
         getTemplates()
         .then(response => {setTemplate(response.data.results.filter((template: { name: string; }) => template.name === 'Base Daily')[0].html)})
-        .catch(error => {toast.error('Hubo un error en la página 😔')})
-
+        .catch(() => {toast.error('Hubo un error en la página 😔')})
     }, [])
 
     const Spinner = () => {
         return(
-            <CircularProgress sx={{margin: "auto 0"}} />
+            <FlexContainer height="70vh">
+                <CircularProgress sx={{margin: "auto 0"}} />
+            </FlexContainer>
         )
     }
 
@@ -58,7 +59,7 @@ const TodaysTinto = () => {
     }, [template])
 
     return (
-        <TintoContainer alignItems="center" height="70vh">
+        <TintoContainer alignItems="center">
             {
                 showSpinner ? (
                     <Spinner />
