@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import { getTemplates, getMail } from "../../../services";
+import { getMail, getDailyMail } from "../../../services";
 import { useEffect, useState } from "react";
 import FlexContainer from "../../atoms/FlexContainer";
 import { Toaster, toast } from "react-hot-toast";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
 
@@ -16,13 +16,16 @@ const TintoContainer = styled(FlexContainer)`
 
 const TodaysTinto = () => {
     
-    const [template, setTemplate] = useState<string>('')
+    const [tintoContent, setTintoContent] = useState<string>('')
     const [searchParams] = useSearchParams();
     const [showSpinner, setShowSpinner] = useState<boolean>(true)
 
     useEffect(() => {
-        getTemplates()
-        .then(response => {setTemplate(response.data.results.filter((template: { name: string; }) => template.name === 'Base Daily')[0].html)})
+        getDailyMail({date: searchParams.get('date') || ""})
+        .then(response => {
+            setTintoContent(response.data.html)
+            setShowSpinner(false)
+        })
         .catch(() => {toast.error('Hubo un error en la página 😔')})
     }, [])
 
@@ -34,37 +37,13 @@ const TodaysTinto = () => {
         )
     }
 
-    useEffect(() => {
-        if (template !== '') {
-            let date = searchParams.get('date')
-
-            if (date === null){
-                const today = new Date();
-
-                let day = today.getDate();
-                let month = today.getMonth() + 1;
-                let year = today.getFullYear();
-
-                date = `${day}-${month}-${year}`
-            }
-
-            getMail({date: date})
-            .then((response: any) => {
-                setTemplate(template.replace('{{html}}', response.data.results[0].html))
-                setShowSpinner(false)
-            })
-            .catch(error => {toast.error('Hubo un error en la página 😔')})
-        }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [template])
-
     return (
         <TintoContainer alignItems="center">
             {
                 showSpinner ? (
                     <Spinner />
                 ) : (
-                    <div dangerouslySetInnerHTML={{__html: template}} />
+                    <div dangerouslySetInnerHTML={{__html: tintoContent}} />
                 )
             }
             <Toaster

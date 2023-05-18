@@ -70,12 +70,16 @@ export const getReferralHub = (getParams: ParamType) => {
 
 // TEMPLATES
 
-export const getTemplates = () => {
-    return axios.get('mails/templates/')
-}
+// export const getTemplates = () => {
+//     return axios.get('mails/templates/')
+// }
 
 // MAILS
 
 export const getMail = (getParams: ParamType) => {
     return axios.get('mails/', {params: getParams})
+}
+
+export const getDailyMail = (getParams: ParamType) => {
+    return axios.get('mails/get_todays_tinto/', {params: getParams})
 }
