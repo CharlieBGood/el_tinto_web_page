@@ -48,7 +48,7 @@ const Welcome = () => {
                     <img 
                         style={{width: '100%'}}
                         alt="particles"
-                        src={'/images/home/landing_particulas.png'}
+                        src={'/images/home/landing_particles.png'}
                     />
                 )
             }

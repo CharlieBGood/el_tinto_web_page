@@ -38,24 +38,25 @@ const SuscribeConfirm = () => {
                     </Typography>
                 )
             }
-            <Button 
-                variant="contained"
-                style={{padding: '15px', marginTop: '30px'}}
-                onClick={SendToEmailProvider}
-            >
-                {
-                    (emailProvider === "gmail" || emailProvider === "outlook" || emailProvider === "yahoo")
-                    && (
+            
+            {
+                (emailProvider === "gmail" || emailProvider === "outlook" || emailProvider === "yahoo")
+                && (
+                    <Button 
+                        variant="contained"
+                        style={{padding: '15px', marginTop: '30px'}}
+                        onClick={SendToEmailProvider}
+                    >
                         <img
                             src={`/images/utils/${emailProvider}_icon.png`}
                             style={{width: '30px', margin: '0 10px 0 0'}}
                             alt='email provider'
                         />
-                    )
-                }
-                    Abrir {emailProvider.charAt(0).toUpperCase() + emailProvider.slice(1).toLocaleLowerCase()}
-                <OpenInNewIcon style={{color: "#FFF", margin: "0 0 0 10px"}}/>
-            </Button>
+                            Abrir {emailProvider.charAt(0).toUpperCase() + emailProvider.slice(1).toLocaleLowerCase()}
+                        <OpenInNewIcon style={{color: "#FFF", margin: "0 0 0 10px"}}/>
+                    </Button>
+                )
+            }
         </ContentContainer>
     )
 }

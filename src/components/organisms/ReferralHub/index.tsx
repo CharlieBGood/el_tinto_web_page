@@ -1,9 +1,9 @@
-import { Button, Card, CardContent, CardMedia, Link, TextField, Typography } from "@mui/material";
+import { Button, Card, CardContent, CardMedia, Link, TextField, Typography, duration } from "@mui/material";
 import { FlexContainer } from "../../atoms";
 import ContentContainer from "../../atoms/ContentContainer";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getReferralHub } from "../../../services";
+import { getReferralHub, postMilestoneEmail } from "../../../services";
 import styled from "styled-components";
 import THEME from '../../../utils/styledTheme';
 import { FileCopySharp } from "@mui/icons-material";
@@ -39,6 +39,14 @@ const MilestoneTitleTypography = styled(Typography)`
     text-align: center;
     @media only screen and (max-width: 768px) {
         font-size: 9px !important;
+    }
+`
+
+const MilestoneClaimTypography = styled(Typography)`
+    font-size: 20px !important;
+    text-align: center;
+    @media only screen and (max-width: 768px) {
+        font-size: 12px !important;
     }
 `
 
@@ -84,6 +92,22 @@ const ReferralHub = () => {
         toast.success('¡Has copiado tu link!')
     }
 
+    const sendMilestoneEmail = (milestone: number) => {
+
+
+        const email = decodeURIComponent(searchParams.get('email') || '');
+
+        postMilestoneEmail({milestone: milestone, email: email})
+        .then(response => {
+            setReferralHubInfo(response.data)
+            toast.success(
+                '¡Has reclamado tu premio!\nRevisa tu correo', 
+                {duration: 5000, style: {textAlign: "center"}}
+            )
+        })
+        .catch(() => toast.error('Ha ocurrido un error, por favor contacta a soporte.'))
+    }
+
     const milestonesInfoFirstRow = [
         {
             name: "Stickers de whatsapp", 
@@ -126,19 +150,19 @@ const ReferralHub = () => {
 
     const ribbonImageUrl = () => {
         if (referralHubInfo.referral_count < 1){
-            return 'https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_NINGUNO.png'
+            return '/images/referral_hub/referred_none.png'
         }
         else if (referralHubInfo.referral_percentage <= 1){
-            return 'https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_ORO.png'
+            return '/images/referral_hub/referred_gold.png'
         }
         else if (referralHubInfo.referral_percentage <= 10){
-            return 'https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_PLATA.png'
+            return '/images/referral_hub/referred_silver.png'
         }
         else if (referralHubInfo.referral_percentage <= 20){
-            return 'https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_BRONCE.png'
+            return '/images/referral_hub/referred_bronze.png'
         }
         else {
-            return 'https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERIDOS_OTROS.png'
+            return '/images/referral_hub/referred_others.png'
         }
     }
 
@@ -207,21 +231,45 @@ const ReferralHub = () => {
                     <FlexContainer width="100%">
                         {
                             milestonesInfoFirstRow.map(milestone => (
-                                <Card sx={{ width: '25%', border: `2px solid ${THEME.colors.primary}`, margin: "0 3px" }}>
-                                    <CardMedia
-                                        component="img"
-                                        image={milestone.url}
-                                        alt="green iguana"
-                                        style={{padding: "0 10%"}}
-                                    />
-                                    <MilestoneDescriptionContainer>
-                                        <MilestoneTitleTypography>
-                                            {milestone.name}
-                                        </MilestoneTitleTypography>
-                                        <MilestoneNumberTypography>
-                                            {milestone.referred_users}
-                                        </MilestoneNumberTypography>
-                                    </MilestoneDescriptionContainer>
+                                <Card sx={{ 
+                                        width: '25%', 
+                                        border: referralHubInfo.milestone_status !== undefined && referralHubInfo.milestone_status[milestone.referred_users].claimed === true ? `2px solid ${THEME.colors.secondary}` : `2px solid ${THEME.colors.primary}` , 
+                                        margin: "0 3px", position: "relative" 
+                                    }}>
+                                    <FlexContainer 
+                                        height="100%"
+                                        width="100%"
+                                        direction="column" 
+                                        alignItems="center"
+                                        onClick={() => sendMilestoneEmail(milestone.referred_users)}
+                                        style={{
+                                            zIndex: referralHubInfo.milestone_status !== undefined && referralHubInfo.milestone_status[milestone.referred_users].obtained === true && referralHubInfo.milestone_status[milestone.referred_users].claimed === false ? 10 : -1, 
+                                            backgroundColor: THEME.colors.primary,
+                                            opacity: 0.7, 
+                                            position: "absolute",
+                                            cursor: "pointer"
+                                        }}
+                                    >
+                                        <MilestoneClaimTypography style={{color: "#FFF", margin: "auto 0", fontWeight: "700"}}>
+                                            Reclamar
+                                        </MilestoneClaimTypography>
+                                    </FlexContainer>
+                                    <FlexContainer direction="column">
+                                        <CardMedia
+                                            component="img"
+                                            image={milestone.url}
+                                            alt="prize"
+                                            style={{padding: "0 10%"}}
+                                        />
+                                        <MilestoneDescriptionContainer>
+                                            <MilestoneTitleTypography>
+                                                {milestone.name}
+                                            </MilestoneTitleTypography>
+                                            <MilestoneNumberTypography>
+                                                {milestone.referred_users}
+                                            </MilestoneNumberTypography>
+                                        </MilestoneDescriptionContainer>
+                                    </FlexContainer>
                                 </Card>
                             ))
                         }
@@ -229,11 +277,34 @@ const ReferralHub = () => {
                     <FlexContainer width="100%" margin="10px auto" justify="center">
                         {
                             milestonesInfoSecondRow.map(milestone => (
-                                <Card sx={{ width: '25%', border: `2px solid ${THEME.colors.primary}`, margin: "0 3px" }}>
+                                <Card sx={{ 
+                                    width: '25%', 
+                                    border: referralHubInfo.milestone_status !== undefined && referralHubInfo.milestone_status[milestone.referred_users].claimed === true ? `2px solid ${THEME.colors.secondary}` : `2px solid ${THEME.colors.primary}` , 
+                                    margin: "0 3px", position: "relative" 
+                                }}>
+                                <FlexContainer 
+                                    height="100%"
+                                    width="100%"
+                                    direction="column" 
+                                    alignItems="center"
+                                    onClick={() => sendMilestoneEmail(milestone.referred_users)}
+                                    style={{
+                                        zIndex: referralHubInfo.milestone_status !== undefined && referralHubInfo.milestone_status[milestone.referred_users].obtained === true && referralHubInfo.milestone_status[milestone.referred_users].claimed === false ? 10 : -1, 
+                                        backgroundColor: THEME.colors.primary,
+                                        opacity: 0.7, 
+                                        position: "absolute",
+                                        cursor: "pointer"
+                                    }}
+                                >
+                                    <MilestoneClaimTypography style={{color: "#FFF", margin: "auto 0", fontWeight: "700"}}>
+                                        Reclamar
+                                    </MilestoneClaimTypography>
+                                </FlexContainer>
+                                <FlexContainer direction="column" alignItems="center">
                                     <CardMedia
                                         component="img"
                                         image={milestone.url}
-                                        alt="green iguana"
+                                        alt="prize"
                                         style={{padding: "0 10%"}}
                                     />
                                     <MilestoneDescriptionContainer>
@@ -244,7 +315,8 @@ const ReferralHub = () => {
                                             {milestone.referred_users}
                                         </MilestoneNumberTypography>
                                     </MilestoneDescriptionContainer>
-                                </Card>
+                                </FlexContainer>
+                            </Card>
                             ))
                         }
                     </FlexContainer>

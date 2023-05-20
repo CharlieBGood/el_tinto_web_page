@@ -68,6 +68,10 @@ export const getReferralHub = (getParams: ParamType) => {
     return axios.get('users/referral_hub/', {params: getParams})
 }
 
+export const postMilestoneEmail = (data: ParamType) => {
+    return axios.post('users/send_milestone_mail/', data)
+}
+
 // TEMPLATES
 
 // export const getTemplates = () => {
