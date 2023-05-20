@@ -72,7 +72,7 @@ const ChangeDaysForm: React.FC<ChangeDaysFormProps> = ({setPageState}) => {
     const onClick = () => {
         navigate({
             pathname: '/desuscribirse/adios',
-            search: `?user_name=${searchParams.get('user_name')}&email=${searchParams.get('email')})}`
+            search: `?user_name=${searchParams.get('user_name')}&email=${searchParams.get('email')}`
         })
     }
 
