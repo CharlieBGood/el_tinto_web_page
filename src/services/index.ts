@@ -83,3 +83,8 @@ export const getMail = (getParams: ParamType) => {
 export const getDailyMail = (getParams: ParamType) => {
     return axios.get('mails/get_todays_tinto/', {params: getParams})
 }
+
+// NEWS
+export const getNews = (id: string) => {
+    return axios.get(`tinto-blocks-entries/${id}/get_web_news/`)
+}
