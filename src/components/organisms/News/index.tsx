@@ -50,7 +50,7 @@ const News = () => {
                 )
             }
             <Toaster
-                position="bottom-right"
+                position="top-center"
                 reverseOrder={false}
             />
         </NewsContainer>

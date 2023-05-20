@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, CardMedia, Link, TextField, Typography, duration } from "@mui/material";
+import { Button, Card, CardContent, CardMedia, CircularProgress, Link, TextField, Typography, duration } from "@mui/material";
 import { FlexContainer } from "../../atoms";
 import ContentContainer from "../../atoms/ContentContainer";
 import { useSearchParams } from "react-router-dom";
@@ -77,6 +77,7 @@ const ReferralHub = () => {
 
     const [searchParams] = useSearchParams();
     const [referralHubInfo, setReferralHubInfo] = useState<any>({})
+    const [showSpinner, setShowSpinner] = useState<boolean>(true)
 
     useEffect(() => {
 
@@ -85,6 +86,9 @@ const ReferralHub = () => {
         getReferralHub({email: email})
         .then(response => setReferralHubInfo(response.data))
         .catch(error => console.log(error.data))
+
+        setShowSpinner(false);
+
     }, [])
 
     const copyLink = () => {
@@ -93,7 +97,6 @@ const ReferralHub = () => {
     }
 
     const sendMilestoneEmail = (milestone: number) => {
-
 
         const email = decodeURIComponent(searchParams.get('email') || '');
 
@@ -111,39 +114,39 @@ const ReferralHub = () => {
     const milestonesInfoFirstRow = [
         {
             name: "Stickers de whatsapp", 
-            url: "https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_1_STICKERS.png",
+            url: "/images/referral_hub/prize_1_stickers.png",
             referred_users: 1
         },
         {
             name: "Tinto Dominguero", 
-            url: "https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_2_DOMINGUERO.png",
+            url: "/images/referral_hub/prize_2_dominguero.png",
             referred_users: 3
         },
         {
             name: "La Cafeteria (Comunidad)", 
-            url: "https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_3_COMUNIDAD.png",
+            url: "/images/referral_hub/prize_3_community.png",
             referred_users: 5
         },
         {
             name: "Charlas con El Tinto", 
-            url: "https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_4_CHARLAS.png",
+            url: "/images/referral_hub/prize_4_talks.png",
             referred_users: 10
         }
     ]
     const milestonesInfoSecondRow = [
         {
             name: "Mug", 
-            url: "https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_5_MUG.png",
+            url: "/images/referral_hub/prize_5_mug.png",
             referred_users: 17
         },
         {
             name: "Gorra", 
-            url: "https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_6_GORRA.png",
+            url: "/images/referral_hub/prize_6_hat.png",
             referred_users: 25
         },
         {
             name: "Café", 
-            url: "https://el-tinto-utils.s3.amazonaws.com/referral_program/REFERRAL_PREMIO_7_CAF%C2%90.png",
+            url: "/images/referral_hub/prize_7_coffee.png",
             referred_users: 50
         }
     ]
@@ -204,34 +207,89 @@ const ReferralHub = () => {
         }
     }
 
-    return(
-        <>
-            <ContentContainer>
-                <ReferralHubInfoContainer direction="column">
-                    <Typography variant="h2">
-                        ¡Hola {referralHubInfo.user_name}!
-                    </Typography>
-                    <BookmarkRibbon>
-                        <FlexContainer width="100%" alignItems="center">
-                            <img 
-                                src={ribbonImageUrl()}
-                                alt='ribbon_image' 
-                                style={{width: '25%'}}
-                            />
-                            {ribbonString()}
+    const Spinner = () => {
+        return(
+            <FlexContainer height="70vh" width="100%">
+                <CircularProgress sx={{margin: "auto"}} />
+            </FlexContainer>
+        )
+    }
+
+    const ReferralHubInfo = () => {
+        return(
+            <>
+                <ContentContainer>
+                    <ReferralHubInfoContainer direction="column">
+                        <Typography variant="h2">
+                            ¡Hola {referralHubInfo.user_name}!
+                        </Typography>
+                        <BookmarkRibbon>
+                            <FlexContainer width="100%" alignItems="center">
+                                <img 
+                                    src={ribbonImageUrl()}
+                                    alt='ribbon_image' 
+                                    style={{width: '25%'}}
+                                />
+                                {ribbonString()}
+                            </FlexContainer>
+                        </BookmarkRibbon>
+                        <Typography variant="body1">
+                            Estás a solamente ({referralHubInfo.missing_referred_users_for_next_price}) 
+                            referidos de conseguir {referralHubInfo.pre_price_string} <strong>{referralHubInfo.price_description}</strong>.
+                        </Typography>
+                        <Typography variant="body1" style={{fontWeight: '700', margin: "20px 0"}}>
+                            Tu número de referidos: {referralHubInfo.referral_count}
+                        </Typography>
+                        <FlexContainer width="100%">
+                            {
+                                milestonesInfoFirstRow.map(milestone => (
+                                    <Card sx={{ 
+                                            width: '25%', 
+                                            border: referralHubInfo.milestone_status !== undefined && referralHubInfo.milestone_status[milestone.referred_users].claimed === true ? `2px solid ${THEME.colors.secondary}` : `2px solid ${THEME.colors.primary}` , 
+                                            margin: "0 3px", position: "relative" 
+                                        }}>
+                                        <FlexContainer 
+                                            height="100%"
+                                            width="100%"
+                                            direction="column" 
+                                            alignItems="center"
+                                            onClick={() => sendMilestoneEmail(milestone.referred_users)}
+                                            style={{
+                                                zIndex: referralHubInfo.milestone_status !== undefined && referralHubInfo.milestone_status[milestone.referred_users].obtained === true && referralHubInfo.milestone_status[milestone.referred_users].claimed === false ? 10 : -1, 
+                                                backgroundColor: THEME.colors.primary,
+                                                opacity: 0.7, 
+                                                position: "absolute",
+                                                cursor: "pointer"
+                                            }}
+                                        >
+                                            <MilestoneClaimTypography style={{color: "#FFF", margin: "auto 0", fontWeight: "700"}}>
+                                                Reclamar
+                                            </MilestoneClaimTypography>
+                                        </FlexContainer>
+                                        <FlexContainer direction="column">
+                                            <CardMedia
+                                                component="img"
+                                                image={milestone.url}
+                                                alt="prize"
+                                                style={{padding: "0 10%"}}
+                                            />
+                                            <MilestoneDescriptionContainer>
+                                                <MilestoneTitleTypography>
+                                                    {milestone.name}
+                                                </MilestoneTitleTypography>
+                                                <MilestoneNumberTypography>
+                                                    {milestone.referred_users}
+                                                </MilestoneNumberTypography>
+                                            </MilestoneDescriptionContainer>
+                                        </FlexContainer>
+                                    </Card>
+                                ))
+                            }
                         </FlexContainer>
-                    </BookmarkRibbon>
-                    <Typography variant="body1">
-                        Estás a solamente ({referralHubInfo.missing_referred_users_for_next_price}) 
-                        referidos de conseguir {referralHubInfo.pre_price_string} <strong>{referralHubInfo.price_description}</strong>.
-                    </Typography>
-                    <Typography variant="body1" style={{fontWeight: '700', margin: "20px 0"}}>
-                        Tu número de referidos: {referralHubInfo.referral_count}
-                    </Typography>
-                    <FlexContainer width="100%">
-                        {
-                            milestonesInfoFirstRow.map(milestone => (
-                                <Card sx={{ 
+                        <FlexContainer width="100%" margin="10px auto" justify="center">
+                            {
+                                milestonesInfoSecondRow.map(milestone => (
+                                    <Card sx={{ 
                                         width: '25%', 
                                         border: referralHubInfo.milestone_status !== undefined && referralHubInfo.milestone_status[milestone.referred_users].claimed === true ? `2px solid ${THEME.colors.secondary}` : `2px solid ${THEME.colors.primary}` , 
                                         margin: "0 3px", position: "relative" 
@@ -254,7 +312,7 @@ const ReferralHub = () => {
                                             Reclamar
                                         </MilestoneClaimTypography>
                                     </FlexContainer>
-                                    <FlexContainer direction="column">
+                                    <FlexContainer direction="column" alignItems="center">
                                         <CardMedia
                                             component="img"
                                             image={milestone.url}
@@ -271,136 +329,103 @@ const ReferralHub = () => {
                                         </MilestoneDescriptionContainer>
                                     </FlexContainer>
                                 </Card>
-                            ))
-                        }
-                    </FlexContainer>
-                    <FlexContainer width="100%" margin="10px auto" justify="center">
-                        {
-                            milestonesInfoSecondRow.map(milestone => (
-                                <Card sx={{ 
-                                    width: '25%', 
-                                    border: referralHubInfo.milestone_status !== undefined && referralHubInfo.milestone_status[milestone.referred_users].claimed === true ? `2px solid ${THEME.colors.secondary}` : `2px solid ${THEME.colors.primary}` , 
-                                    margin: "0 3px", position: "relative" 
-                                }}>
-                                <FlexContainer 
-                                    height="100%"
-                                    width="100%"
-                                    direction="column" 
-                                    alignItems="center"
-                                    onClick={() => sendMilestoneEmail(milestone.referred_users)}
-                                    style={{
-                                        zIndex: referralHubInfo.milestone_status !== undefined && referralHubInfo.milestone_status[milestone.referred_users].obtained === true && referralHubInfo.milestone_status[milestone.referred_users].claimed === false ? 10 : -1, 
-                                        backgroundColor: THEME.colors.primary,
-                                        opacity: 0.7, 
-                                        position: "absolute",
-                                        cursor: "pointer"
-                                    }}
-                                >
-                                    <MilestoneClaimTypography style={{color: "#FFF", margin: "auto 0", fontWeight: "700"}}>
-                                        Reclamar
-                                    </MilestoneClaimTypography>
-                                </FlexContainer>
-                                <FlexContainer direction="column" alignItems="center">
-                                    <CardMedia
-                                        component="img"
-                                        image={milestone.url}
-                                        alt="prize"
-                                        style={{padding: "0 10%"}}
-                                    />
-                                    <MilestoneDescriptionContainer>
-                                        <MilestoneTitleTypography>
-                                            {milestone.name}
-                                        </MilestoneTitleTypography>
-                                        <MilestoneNumberTypography>
-                                            {milestone.referred_users}
-                                        </MilestoneNumberTypography>
-                                    </MilestoneDescriptionContainer>
-                                </FlexContainer>
-                            </Card>
-                            ))
-                        }
-                    </FlexContainer>
-                </ReferralHubInfoContainer>
-            </ContentContainer>
-            <ShareContainer
-                direction="column"
-                width="100%" 
-                backgroundColor="#f8f4f4" 
-                borderRadius="0"
-                boxShadow="rgba(0, 0, 0, 0.1) 0px -12px 10px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;"
-            >
-                <Typography variant="body1" style={{fontWeight: '700'}}>
-                    Comparte tu link por redes
-                </Typography>
-                <Typography variant="body1">
-                    Haz click en los botones de redes para compartir tu link personalizado
-                </Typography>
-                <FlexContainer width="100%">
-                    <img
-                      src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_SHARE.png"
-                      style={{width: "12%", maxWidth:"75px"}}
-                      alt="share"
-                    />
-                    <Link 
-                        href={`https://api.whatsapp.com/send?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`}
-                        style={{width: "12%", maxWidth:"75px"}}
-                    >
-                        <img
-                        src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_WA.png"
-                        style={{width: "100%"}}
-                        alt="share"
-                        />  
-                    </Link>
-                    <Link 
-                        href={`https://www.facebook.com/sharer/sharer.php?u=https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`}
-                        style={{width: "12%", maxWidth:"75px"}}
-                    >
-                        <img
-                        src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_FB.png"
-                        style={{width: "100%"}}
-                        alt="share"
-                        />  
-                    </Link>
-                    <Link 
-                        href={`https://twitter.com/intent/tweet?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`}
-                        style={{width: "12%", maxWidth:"75px"}}
-                    >
-                        <img
-                        src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_TW.png"
-                        style={{width: "100%"}}
-                        alt="share"
-                        />  
-                    </Link>
-                </FlexContainer>
-            </ShareContainer>
-            <ShareContainer
-                direction="column"
-                width="100%"
-                borderRadius="0"
-                margin="10px 0"
-            >
-                <Typography variant="body1" style={{fontWeight: '700'}}>
-                    O copia y pega tu link personalizado
-                </Typography>
-                <TextField 
-                    variant="filled" 
-                    disabled
-                    value={`https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`} 
-                    sx={{width: '80%'}}
-                />
-                <Button 
-                    variant="contained" 
-                    sx={{marginTop: "20px", padding: "10px"}}
-                    onClick={copyLink}
+                                ))
+                            }
+                        </FlexContainer>
+                    </ReferralHubInfoContainer>
+                </ContentContainer>
+                <ShareContainer
+                    direction="column"
+                    width="100%" 
+                    backgroundColor="#f8f4f4" 
+                    borderRadius="0"
+                    boxShadow="rgba(0, 0, 0, 0.1) 0px -12px 10px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;"
                 >
-                    <FileCopySharp />
-                    Copiar link
-                </Button>
-                <Toaster
-                    position="top-center"
-                    reverseOrder={false}
-                />
-            </ShareContainer>
+                    <Typography variant="body1" style={{fontWeight: '700'}}>
+                        Comparte tu link por redes
+                    </Typography>
+                    <Typography variant="body1">
+                        Haz click en los botones de redes para compartir tu link personalizado
+                    </Typography>
+                    <FlexContainer width="100%">
+                        <img
+                          src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_SHARE.png"
+                          style={{width: "12%", maxWidth:"75px"}}
+                          alt="share"
+                        />
+                        <Link 
+                            href={`https://api.whatsapp.com/send?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`}
+                            style={{width: "12%", maxWidth:"75px"}}
+                        >
+                            <img
+                            src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_WA.png"
+                            style={{width: "100%"}}
+                            alt="share"
+                            />  
+                        </Link>
+                        <Link 
+                            href={`https://www.facebook.com/sharer/sharer.php?u=https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`}
+                            style={{width: "12%", maxWidth:"75px"}}
+                        >
+                            <img
+                            src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_FB.png"
+                            style={{width: "100%"}}
+                            alt="share"
+                            />  
+                        </Link>
+                        <Link 
+                            href={`https://twitter.com/intent/tweet?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`}
+                            style={{width: "12%", maxWidth:"75px"}}
+                        >
+                            <img
+                            src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_TW.png"
+                            style={{width: "100%"}}
+                            alt="share"
+                            />  
+                        </Link>
+                    </FlexContainer>
+                </ShareContainer>
+                <ShareContainer
+                    direction="column"
+                    width="100%"
+                    borderRadius="0"
+                    margin="10px 0"
+                >
+                    <Typography variant="body1" style={{fontWeight: '700'}}>
+                        O copia y pega tu link personalizado
+                    </Typography>
+                    <TextField 
+                        variant="filled" 
+                        disabled
+                        value={`https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`} 
+                        sx={{width: '80%'}}
+                    />
+                    <Button 
+                        variant="contained" 
+                        sx={{marginTop: "20px", padding: "10px"}}
+                        onClick={copyLink}
+                    >
+                        <FileCopySharp />
+                        Copiar link
+                    </Button>
+                </ShareContainer>
+            </>
+        )
+    }
+
+    return (
+        <>
+            {
+                showSpinner ? (
+                    <Spinner />
+                ) : (
+                    <ReferralHubInfo />
+                )
+            }
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
         </>
     )
 }

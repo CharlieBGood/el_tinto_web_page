@@ -47,7 +47,7 @@ const TodaysTinto = () => {
                 )
             }
             <Toaster
-                position="bottom-right"
+                position="top-center"
                 reverseOrder={false}
             />
         </TintoContainer>
