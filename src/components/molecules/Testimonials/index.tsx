@@ -42,8 +42,11 @@ const Testimonials = () => {
                 diario 👉🏻​<Link href="/suscribirse">aquí</Link>👈🏻​. No se lo recomendamos nosotros, se lo recomiendan nuestros usuarios.
             </Typography>
             <Carousel
+                duration={500}
+                interval={5000}
+                animation="slide"
                 indicators={false}
-                height="375px" 
+                height="410px" 
                 sx={{margin: "40px 0 auto", width: "100%"}}
             >
                 {
