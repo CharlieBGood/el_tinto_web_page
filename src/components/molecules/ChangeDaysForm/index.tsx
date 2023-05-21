@@ -72,7 +72,7 @@ const ChangeDaysForm: React.FC<ChangeDaysFormProps> = ({setPageState}) => {
     const onClick = () => {
         navigate({
             pathname: '/desuscribirse/adios',
-            search: `?user_name=${searchParams.get('user_name')}&email=${searchParams.get('email')})}`
+            search: `?user_name=${searchParams.get('user_name')}&email=${searchParams.get('email')}`
         })
     }
 
@@ -136,7 +136,6 @@ const ChangeDaysForm: React.FC<ChangeDaysFormProps> = ({setPageState}) => {
                 <FlexContainer margin="5px 0 0 0" width='100%' direction={windowWidth > 768 ? 'row' : 'column'}>
                     <Button 
                         variant="contained" type={'submit'}
-                        sx={{}} 
                         style={{
                             width: '100%', 
                             margin: windowWidth > 768 ? '20px 20px 0 0' : '20px 0 10px 0', 

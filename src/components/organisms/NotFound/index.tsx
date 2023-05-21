@@ -1,9 +1,15 @@
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import ContentContainer from "../../atoms/ContentContainer";
-import { Button } from "react-bootstrap";
-import THEME from '../../../utils/styledTheme';
+import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
+
+    const navigate = useNavigate();
+
+    const redirectToHome = () => {
+        navigate('/el-tinto-de-hoy')
+    }
+
     return(
         <ContentContainer alignItems="center">
             <Typography variant="h2" textAlign="center">
@@ -22,8 +28,9 @@ const NotFound = () => {
                 sabor y te acabes de despertar hoy, síguenos leyendo de nuevo aquí 👇🏻
             </Typography>
             <Button 
+                style={{padding: '15px', marginTop: '30px'}}
                 variant="contained"
-                style={{margin: '20px 0 0 0', backgroundColor: THEME.colors.buttonColor, color: "#FFFFFF"}}
+                onClick={redirectToHome}
             >
                 El Tinto de hoy ☕
             </Button>

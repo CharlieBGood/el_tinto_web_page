@@ -1,27 +1,30 @@
 import styled from "styled-components";
-import { getDailyMail } from "../../../services";
+import { getNews } from "../../../services";
 import { useEffect, useState } from "react";
 import FlexContainer from "../../atoms/FlexContainer";
 import { Toaster, toast } from "react-hot-toast";
-import { useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 
 
-const TintoContainer = styled(FlexContainer)`
+const NewsContainer = styled(FlexContainer)`
     width: 100%;
     flex-direction: column;
     margin: 1.5rem 0;
     padding: 0 9%;
 `
 
-const TodaysTinto = () => {
+const News = () => {
     
     const [tintoContent, setTintoContent] = useState<string>('')
-    const [searchParams] = useSearchParams();
     const [showSpinner, setShowSpinner] = useState<boolean>(true)
 
+    let { id } = useParams();
+
     useEffect(() => {
-        getDailyMail({date: searchParams.get('date') || ""})
+        const newsId = id !== undefined ? id : '' 
+
+        getNews(newsId)
         .then(response => {
             setTintoContent(response.data.html)
             setShowSpinner(false)
@@ -38,7 +41,7 @@ const TodaysTinto = () => {
     }
 
     return (
-        <TintoContainer alignItems="center">
+        <NewsContainer alignItems="center">
             {
                 showSpinner ? (
                     <Spinner />
@@ -50,8 +53,8 @@ const TodaysTinto = () => {
                 position="top-center"
                 reverseOrder={false}
             />
-        </TintoContainer>
+        </NewsContainer>
     )
 }
 
-export default TodaysTinto;
+export default News;

@@ -48,7 +48,7 @@ const Welcome = () => {
                     <img 
                         style={{width: '100%'}}
                         alt="particles"
-                        src="https://el-tinto-utils.s3.amazonaws.com/home/LANDING_PARTI%CC%81CULAS.png" 
+                        src={'/images/home/landing_particles.png'}
                     />
                 )
             }

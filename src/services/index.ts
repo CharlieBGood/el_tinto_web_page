@@ -68,14 +68,27 @@ export const getReferralHub = (getParams: ParamType) => {
     return axios.get('users/referral_hub/', {params: getParams})
 }
 
+export const postMilestoneEmail = (data: ParamType) => {
+    return axios.post('users/send_milestone_mail/', data)
+}
+
 // TEMPLATES
 
-export const getTemplates = () => {
-    return axios.get('mails/templates/')
-}
+// export const getTemplates = () => {
+//     return axios.get('mails/templates/')
+// }
 
 // MAILS
 
 export const getMail = (getParams: ParamType) => {
     return axios.get('mails/', {params: getParams})
+}
+
+export const getDailyMail = (getParams: ParamType) => {
+    return axios.get('mails/get_todays_tinto/', {params: getParams})
+}
+
+// NEWS
+export const getNews = (id: string) => {
+    return axios.get(`tinto-blocks-entries/${id}/get_web_news/`)
 }
