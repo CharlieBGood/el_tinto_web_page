@@ -39,7 +39,13 @@ const TodaysTinto = () => {
     }
 
     return (
-        <TintoContainer alignItems="center">
+        <TintoContainer alignItems="center" className="wrapper">
+            <MetaTags>
+                <title>El Tinto de hoy</title>
+                <meta name="description" content="Historias importantes para gente ocupada." />
+                <meta property="og:title" content="El Tinto de hoy" />
+                <meta property="og:image" content="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_image.png"/>
+            </MetaTags>
             {
                 showSpinner ? (
                     <Spinner />
@@ -51,12 +57,6 @@ const TodaysTinto = () => {
                 position="top-center"
                 reverseOrder={false}
             />
-            <MetaTags>
-                <meta name="url" content="https://eltinto.xyz/el-tinto-de-hoy/" />
-                <meta property="og:title" content="El Tinto de hoy" />
-                <meta property="og:image" content="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_image.png"/>
-                <meta property="og:description" content="Historias importantes para gente ocupada"/>
-            </MetaTags>
         </TintoContainer>
     )
 }
