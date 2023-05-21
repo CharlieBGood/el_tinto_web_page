@@ -5,7 +5,7 @@ import FlexContainer from "../../atoms/FlexContainer";
 import { Toaster, toast } from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
-import MetaTags from 'react-meta-tags';
+import Helmet from "helmet";
 
 
 const TintoContainer = styled(FlexContainer)`
@@ -40,12 +40,11 @@ const TodaysTinto = () => {
 
     return (
         <TintoContainer alignItems="center" className="wrapper">
-            <MetaTags>
+            <Helmet prioritizeSeoTags>
                 <title>El Tinto de hoy</title>
-                <meta name="description" content="Historias importantes para gente ocupada." />
-                <meta property="og:title" content="El Tinto de hoy" />
-                <meta property="og:image" content="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_image.png"/>
-            </MetaTags>
+                <meta property="og:description" content="Historias importantes para gente ocupada."/>
+                <meta property="og:image" content="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_image.png" />
+            </Helmet>
             {
                 showSpinner ? (
                     <Spinner />
