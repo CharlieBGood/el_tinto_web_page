@@ -42,6 +42,7 @@ const TodaysTinto = () => {
         <TintoContainer alignItems="center" className="wrapper">
             <Helmet prioritizeSeoTags>
                 <title>El Tinto de hoy</title>
+                <meta name="description" content="Historias importantes para gente ocupada."/>
                 <meta property="og:description" content="Historias importantes para gente ocupada."/>
                 <meta property="og:image" content="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_image.png" />
             </Helmet>
