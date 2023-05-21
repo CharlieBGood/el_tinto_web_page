@@ -5,6 +5,7 @@ import FlexContainer from "../../atoms/FlexContainer";
 import { Toaster, toast } from "react-hot-toast";
 import { useSearchParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
+import { Helmet } from 'react-helmet-async';
 
 
 const TintoContainer = styled(FlexContainer)`
