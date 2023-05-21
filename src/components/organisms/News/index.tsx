@@ -5,6 +5,7 @@ import FlexContainer from "../../atoms/FlexContainer";
 import { Toaster, toast } from "react-hot-toast";
 import { useParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
+import MetaTags from 'react-meta-tags';
 
 
 const NewsContainer = styled(FlexContainer)`
@@ -53,6 +54,13 @@ const News = () => {
                 position="top-center"
                 reverseOrder={false}
             />
+            <MetaTags>
+                <title>El Tinto de hoy</title>
+                <meta name="url" content="https://eltinto.xyz/noticias/" />
+                <meta property="og:title" content="El Tinto - Noticias" />
+                <meta property="og:image" content="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_image.png"/>
+                <meta property="og:description" content="Historias importantes para gente ocupada"/>
+            </MetaTags>
         </NewsContainer>
     )
 }
