@@ -3,7 +3,7 @@ import { getDailyMail } from "../../../services";
 import { useEffect, useState } from "react";
 import FlexContainer from "../../atoms/FlexContainer";
 import { Toaster, toast } from "react-hot-toast";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
 import { Helmet } from 'react-helmet-async';
 
@@ -17,8 +17,9 @@ const TintoContainer = styled(FlexContainer)`
 
 const TodaysTinto = () => {
     
-    const [tintoContent, setTintoContent] = useState<string>('')
     const [searchParams] = useSearchParams();
+    const { hash } = useLocation();
+    const [tintoContent, setTintoContent] = useState<string>('')
     const [showSpinner, setShowSpinner] = useState<boolean>(true)
 
     useEffect(() => {
@@ -29,6 +30,12 @@ const TodaysTinto = () => {
         })
         .catch(() => {toast.error('Hubo un error en la página 😔')})
     }, [])
+
+    useEffect(() => {
+        if(tintoContent !== null){
+            document.getElementById(hash.substring(1))?.scrollIntoView({block: "start", behavior: 'auto'});
+        }
+    }, [tintoContent])
 
     const Spinner = () => {
         return(
