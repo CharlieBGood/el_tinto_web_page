@@ -33,7 +33,7 @@ const TodaysTinto = () => {
 
     useEffect(() => {
         if(tintoContent !== null){
-            document.getElementById(hash.substring(1))?.scrollIntoView({block: "end", behavior: 'auto'});
+            document.getElementById(hash.substring(1))?.scrollIntoView({behavior: 'auto'});
         }
     }, [tintoContent])
 
