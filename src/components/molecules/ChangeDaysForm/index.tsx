@@ -72,7 +72,7 @@ const ChangeDaysForm: React.FC<ChangeDaysFormProps> = ({setPageState}) => {
     const onClick = () => {
         navigate({
             pathname: '/desuscribirse/adios',
-            search: `?user_name=${searchParams.get('user_name')}&email=${searchParams.get('email')}`
+            search: `?user_name=${searchParams.get('user_name')}&user=${searchParams.get('user')}`
         })
     }
 
@@ -81,12 +81,12 @@ const ChangeDaysForm: React.FC<ChangeDaysFormProps> = ({setPageState}) => {
         if(
             [data.monday, data.tuesday, data.wednesday, data.thursday, data.friday, data.saturday, data.sunday].every((val) => val === false)
         ){
-            toast.error("Debes seleccionar al menos un día")
+            toast.error("Debes seleccionar al menos un día.")
             return;
         }
 
-        if (data.email === ''){
-            toast.error("Debes proporcionar un correo electrónico")
+        if (data.uuid === ''){
+            toast.error("El usuario no existe.")
             return;
         }
 
@@ -114,7 +114,7 @@ const ChangeDaysForm: React.FC<ChangeDaysFormProps> = ({setPageState}) => {
                     friday: true, 
                     saturday: true, 
                     sunday: true,
-                    email: searchParams.get('email') || ''
+                    uuid: searchParams.get('user') || ''
                 }}
                 onSuccess={data => onSubmit(data)}
             >
@@ -128,7 +128,7 @@ const ChangeDaysForm: React.FC<ChangeDaysFormProps> = ({setPageState}) => {
                     ))
                 }
                 <TextFieldElement
-                    name="email"
+                    name="uuid"
                     disabled
                     variant="filled"
                     sx={{display: 'none'}}

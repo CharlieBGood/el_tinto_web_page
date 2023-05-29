@@ -5,5 +5,5 @@ export type UnsuscribeProps = {
     not_used: boolean;
     other_email: boolean;
     recommendation: string;
-    email: string;
+    uuid: string;
 };
