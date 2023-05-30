@@ -6,7 +6,7 @@ export type ChangeDaysProps = {
     friday: boolean;
     saturday: boolean;
     sunday: boolean;
-    email: string;
+    uuid: string;
 };
 
 export type ChangeDaysFormProps = {

@@ -51,7 +51,7 @@ const UnsuscribeForm = () => {
     const onSubmit = (data:UnsuscribeProps) => {
         deleteRegister(data)
         .then(async () => {
-            toast.error('Has eliminado tu suscripción')
+            toast.error('Has eliminado tu suscripción.')
             await delay(3000);
             window.location.replace('/')
         })
@@ -69,14 +69,14 @@ const UnsuscribeForm = () => {
                     not_used: false,
                     other_email: false,
                     recommendation: "",
-                    email: searchParams.get('email') || ''
+                    uuid: searchParams.get('user') || ''
                 }}
             >
                 <Typography marginBottom="10px" variant="body2" fontWeight="700" sx={{color: "#FFF !important"}}>
                     Cuéntanos por qué nos enfriamos
                 </Typography>
                 <TextFieldElement
-                    name="email"
+                    name="uuid"
                     disabled
                     variant="filled"
                     sx={{display: 'none'}}

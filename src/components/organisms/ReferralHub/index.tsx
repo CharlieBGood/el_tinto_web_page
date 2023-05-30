@@ -81,13 +81,16 @@ const ReferralHub = () => {
 
     useEffect(() => {
 
-        const email = decodeURIComponent(searchParams.get('email') || '');
+        const uuid = decodeURIComponent(searchParams.get('user') || '');
 
-        getReferralHub({email: email})
-        .then(response => setReferralHubInfo(response.data))
-        .catch(error => console.log(error.data))
-
-        setShowSpinner(false);
+        getReferralHub({uuid: uuid})
+        .then(response => {
+            setReferralHubInfo(response.data)
+            setShowSpinner(false);
+        })
+        .catch(() => {
+            toast.error('El usuario ingresado no existe.')
+        })
 
     }, [])
 
