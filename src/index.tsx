@@ -6,7 +6,9 @@ import { ThemeProvider } from '@mui/material/styles';
 import { ThemeProvider as StyledProvider } from 'styled-components';
 import theme from './utils/theme';
 import styled from './utils/styledTheme';
-import { HelmetProvider } from 'react-helmet-async';
+import ReactGA4 from "react-ga4";
+
+ReactGA4.initialize("G-EJ4EVEBK9R");
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
