@@ -9,6 +9,7 @@ import { SuscribeProps } from "./types";
 import { postRegister } from "../../../services";
 import { Toaster, toast } from "react-hot-toast";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
+import ReactGA4 from "react-ga4";
 
 const FormTextFieldElement = styled(TextFieldElement)`
     background-color: #FFFFFF;
@@ -60,6 +61,12 @@ const SuscribeForm = () => {
             })
         })
         .catch(error => toast.error(error.response.data.email[0]))
+
+        ReactGA4.event({
+            category: "User Creation",
+            action: "Suscription",
+            label: "suscription"
+        });
     }
 
     return(
