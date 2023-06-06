@@ -55,6 +55,12 @@ const SuscribeForm = () => {
 
             const params = new URLSearchParams(response.data);
 
+            ReactGA4.event({
+                category: "User Creation",
+                action: "Suscription",
+                label: "suscription"
+            });
+
             navigate({
                 pathname: '/suscripcion-confirmada',
                 search: `?${createSearchParams(params)}`
@@ -62,11 +68,6 @@ const SuscribeForm = () => {
         })
         .catch(error => toast.error(error.response.data.email[0]))
 
-        ReactGA4.event({
-            category: "User Creation",
-            action: "Suscription",
-            label: "suscription"
-        });
     }
 
     return(
