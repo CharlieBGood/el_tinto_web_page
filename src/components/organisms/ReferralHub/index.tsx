@@ -101,9 +101,9 @@ const ReferralHub = () => {
 
     const sendMilestoneEmail = (milestone: number) => {
 
-        const email = decodeURIComponent(searchParams.get('email') || '');
+        const uuid = decodeURIComponent(searchParams.get('user') || '');
 
-        postMilestoneEmail({milestone: milestone, email: email})
+        postMilestoneEmail({milestone: milestone, uuid: uuid})
         .then(response => {
             setReferralHubInfo(response.data)
             toast.success(
