@@ -72,6 +72,14 @@ export const postMilestoneEmail = (data: ParamType) => {
     return axios.post('users/send_milestone_mail/', data)
 }
 
+export const postUserVisits = (data: ParamType) => {
+    return axios.post('users/user_visits/', data)
+}
+
+export const postUserButtonInteraction = (data: ParamType) => {
+    return axios.post('users/user_button_interaction/', data)
+}
+
 // TEMPLATES
 
 // export const getTemplates = () => {

@@ -1,9 +1,9 @@
-import { Button, Card, CardContent, CardMedia, CircularProgress, Link, TextField, Typography, duration } from "@mui/material";
+import { Button, Card, CardContent, CardMedia, CircularProgress, Link, TextField, Typography } from "@mui/material";
 import { FlexContainer } from "../../atoms";
 import ContentContainer from "../../atoms/ContentContainer";
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getReferralHub, postMilestoneEmail } from "../../../services";
+import { getReferralHub, postMilestoneEmail, postUserButtonInteraction } from "../../../services";
 import styled from "styled-components";
 import THEME from '../../../utils/styledTheme';
 import { FileCopySharp } from "@mui/icons-material";
@@ -97,6 +97,8 @@ const ReferralHub = () => {
     const copyLink = () => {
         navigator.clipboard.writeText(`https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`);
         toast.success('¡Has copiado tu link!')
+
+        buttonInteraction('CP')
     }
 
     const sendMilestoneEmail = (milestone: number) => {
@@ -112,6 +114,14 @@ const ReferralHub = () => {
             )
         })
         .catch(() => toast.error('Ha ocurrido un error, por favor contacta a soporte.'))
+    }
+
+    const buttonInteraction = (type: string) => {
+        postUserButtonInteraction({
+            visit: searchParams.get('user_visit') || 0,
+            type: type,
+            medium: "referral"
+        })
     }
 
     const milestonesInfoFirstRow = [
@@ -357,8 +367,9 @@ const ReferralHub = () => {
                           alt="share"
                         />
                         <Link 
-                            href={`https://api.whatsapp.com/send?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`}
+                            href={`https://api.whatsapp.com/send?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}%26utm_source=whatsapp%26medium=referral`}
                             style={{width: "12%", maxWidth:"75px"}}
+                            onClick={() => buttonInteraction('WP')}
                         >
                             <img
                             src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_WA.png"
@@ -367,8 +378,10 @@ const ReferralHub = () => {
                             />  
                         </Link>
                         <Link 
-                            href={`https://www.facebook.com/sharer/sharer.php?u=https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`}
+                            href={`https://www.facebook.com/sharer/sharer.php?u=https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}%26utm_source=facebook%26medium=referral`}
                             style={{width: "12%", maxWidth:"75px"}}
+                            onClick={() => buttonInteraction('FB')}
+                            
                         >
                             <img
                             src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_FB.png"
@@ -377,8 +390,9 @@ const ReferralHub = () => {
                             />  
                         </Link>
                         <Link 
-                            href={`https://twitter.com/intent/tweet?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`}
+                            href={`https://twitter.com/intent/tweet?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}%26utm_source=twitter%26medium=referral`}
                             style={{width: "12%", maxWidth:"75px"}}
+                            onClick={() => buttonInteraction('TW')}
                         >
                             <img
                             src="https://el-tinto-utils.s3.amazonaws.com/share_individual_news/ALPHA_MENU_BG_TW.png"
