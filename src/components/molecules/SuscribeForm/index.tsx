@@ -72,7 +72,14 @@ const SuscribeForm = () => {
 
     return(
         <SuscribeFormContainer>
-            <FormContainer onSuccess={onSubmit} defaultValues={{referral_code: searchParams.get('referral_code') || undefined}}>
+            <FormContainer 
+                onSuccess={onSubmit} 
+                defaultValues={{
+                    referral_code: searchParams.get('referral_code') || undefined, 
+                    utm_source: searchParams.get('utm_source') || '',
+                    medium: searchParams.get('medium') || ''
+                }}
+            >
                 <FormTextFieldElement name="email" placeholder="tu@correo.com" required/>
                 {
                     searchParams.get('referral_code') && (
@@ -115,6 +122,24 @@ const SuscribeForm = () => {
                         inputProps={{ maxLength: 25 }}
                     />
                     <FormTextFieldElement required={false} name="last_name" placeholder="Apellido (opcional)" />
+                </FlexContainer>
+                <FlexContainer width='100%' margin='20px 0 0 0' direction="column" style={{display: "none"}}>
+                    <FormTextFieldElement
+                        name="utm_source"
+                        required={false}
+                        disabled
+                        variant="filled"
+                        placeholder={searchParams.get('utm_source') || ''}
+                    />
+                </FlexContainer>
+                <FlexContainer width='100%' margin='20px 0 0 0' direction="column" style={{display: "none"}}>
+                    <FormTextFieldElement
+                        name="medium"
+                        required={false}
+                        disabled
+                        variant="filled"
+                        placeholder={searchParams.get('medium') || ''}
+                    />
                 </FlexContainer>
                 <Button 
                     variant="contained" type={'submit'}

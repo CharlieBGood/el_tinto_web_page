@@ -4,6 +4,9 @@ import THEME from '../../../utils/styledTheme';
 import { Typography, styled } from "@mui/material";
 import ContentContainer from "../../atoms/ContentContainer";
 import FormsTextContainer from "../../atoms/FormsTextContainer";
+import { useSearchParams } from "react-router-dom";
+import { useEffect } from "react";
+import { postUserVisits } from "../../../services";
 
 
 const SubtitleFormTypography = styled(Typography)`
@@ -15,6 +18,19 @@ const SubtitleFormTypography = styled(Typography)`
 
 
 const Suscribe = () => {
+
+    const [searchParams] = useSearchParams();
+    const referral_code = searchParams.get('referral_code')
+
+    useEffect(() => {
+
+        if (referral_code !== null){
+            postUserVisits({
+                user: referral_code,
+                type: "SP"
+            })
+        }
+    }, [referral_code]);
 
     return(
         <ContentContainer>
