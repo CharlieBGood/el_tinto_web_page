@@ -30,7 +30,7 @@ const Welcome = () => {
                     Historias importantes para gente ocupada
                 </Typography>
                 <Typography textAlign="left" variant="subtitle1" style={{margin: '5px 0 0 0'}}>
-                    Revisamos 60+ fuentes. Infórmate en menos de lo que te tomas un tinto.
+                    Infórmate en 5 minutos. Revisamos 60+ medios y te enviamos un resumen diario a tu correo.
                     <br></br>
                     <strong>¡Es gratis!</strong>
                 </Typography>
