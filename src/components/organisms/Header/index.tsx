@@ -29,7 +29,7 @@ function Header() {
         <NavBarIcon aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto mb-lg-0">
-            <Nav.Link href="/suscribirse" style={{fontFamily: 'Arial'}}>¡Suscríbete!</Nav.Link>
+            {/* <Nav.Link href="/suscribirse" style={{fontFamily: 'Arial'}}>¡Suscríbete!</Nav.Link> */}
             <Nav.Link href="/el-tinto-de-hoy" style={{fontFamily: 'Arial'}}>El Tinto de hoy</Nav.Link>
             <Nav.Link href="/faq" style={{fontFamily: 'Arial'}}>Preguntas frecuentes</Nav.Link>
           </Nav>

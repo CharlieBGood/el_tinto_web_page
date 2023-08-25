@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import THEME from '../../../utils/styledTheme';
 import HelpIcon from '@mui/icons-material/Help';
 import { SuscribeProps } from "./types";
-import { postRegister } from "../../../services";
+import { postRegister, postUserVisits } from "../../../services";
 import { Toaster, toast } from "react-hot-toast";
 import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import ReactGA4 from "react-ga4";
@@ -35,6 +35,7 @@ const SuscribeForm = () => {
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
     const [searchParams] = useSearchParams();
+    const referral_code = searchParams.get('referral_code')
 
     useEffect(() => {
         function handleWindowResize() {
@@ -47,6 +48,16 @@ const SuscribeForm = () => {
           window.removeEventListener('resize', handleWindowResize);
         };
     }, []);
+
+    useEffect(() => {
+
+        if (referral_code !== null){
+            postUserVisits({
+                user: referral_code,
+                type: "SP"
+            })
+        }
+    }, [referral_code]);
 
     
     const onSubmit = (data: SuscribeProps) => {

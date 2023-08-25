@@ -367,7 +367,7 @@ const ReferralHub = () => {
                           alt="share"
                         />
                         <Link 
-                            href={`https://api.whatsapp.com/send?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}%26utm_source=whatsapp%26medium=referral`}
+                            href={`https://api.whatsapp.com/send?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/?referral_code=${referralHubInfo.referral_code}%26utm_source=whatsapp%26medium=referral`}
                             style={{width: "12%", maxWidth:"75px"}}
                             onClick={() => buttonInteraction('WP')}
                         >
@@ -378,7 +378,7 @@ const ReferralHub = () => {
                             />  
                         </Link>
                         <Link 
-                            href={`https://www.facebook.com/sharer/sharer.php?u=https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}%26utm_source=facebook%26medium=referral`}
+                            href={`https://www.facebook.com/sharer/sharer.php?u=https://${referralHubInfo.env}eltinto.xyz/?referral_code=${referralHubInfo.referral_code}%26utm_source=facebook%26medium=referral`}
                             style={{width: "12%", maxWidth:"75px"}}
                             onClick={() => buttonInteraction('FB')}
                             
@@ -390,7 +390,7 @@ const ReferralHub = () => {
                             />  
                         </Link>
                         <Link 
-                            href={`https://twitter.com/intent/tweet?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}%26utm_source=twitter%26medium=referral`}
+                            href={`https://twitter.com/intent/tweet?text=${referralHubInfo.invite_users_message}https://${referralHubInfo.env}eltinto.xyz/?referral_code=${referralHubInfo.referral_code}%26utm_source=twitter%26medium=referral`}
                             style={{width: "12%", maxWidth:"75px"}}
                             onClick={() => buttonInteraction('TW')}
                         >
@@ -414,7 +414,7 @@ const ReferralHub = () => {
                     <TextField 
                         variant="filled" 
                         disabled
-                        value={`https://${referralHubInfo.env}eltinto.xyz/suscribirse/?referral_code=${referralHubInfo.referral_code}`} 
+                        value={`https://${referralHubInfo.env}eltinto.xyz/?referral_code=${referralHubInfo.referral_code}`} 
                         sx={{width: '80%'}}
                     />
                     <Button 
