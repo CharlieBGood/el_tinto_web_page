@@ -3,6 +3,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ContentContainer from "../../atoms/ContentContainer"
 import THEME from '../../../utils/styledTheme';
 import styled from "styled-components";
+import { useState } from "react";
+import { useExitIntent } from "use-exit-intent";
+import toast, { Toaster } from "react-hot-toast";
+import SuscribePopUp from "../SuscribePopUp";
 
 
 const FaqsImage = styled.img`
@@ -18,6 +22,31 @@ const TAccordion = styled(Accordion)`
 `
 
 const Faqs = () => {
+
+    const [open, setOpen] = useState(false);
+    const { registerHandler, unsubscribe } = useExitIntent({
+        "desktop": {
+            "triggerOnMouseLeave": true,
+        },
+        "mobile": {
+            "triggerOnIdle": true,
+            "delayInSecondsToTrigger": 10
+        }
+    })
+
+    const handleClose = (isSubscription: boolean) => {
+        if (isSubscription){
+            toast.success('¡Bienvenido a El Tinto!')
+        }
+        setOpen(false);
+
+        unsubscribe();
+    };
+
+    registerHandler({
+        id: 'openModal',
+        handler: () => setOpen(true),
+    })
     
     return (
         <ContentContainer>
@@ -97,7 +126,8 @@ const Faqs = () => {
                     ":last-of-type": {
                         borderBottomRightRadius: 0,
                         borderBottomLeftRadius: 0,
-                    }
+                    },
+                    'width': '100%'
                 }}
             >
                 <AccordionSummary
@@ -162,6 +192,11 @@ const Faqs = () => {
                 </Typography>
                 </AccordionDetails>
             </Accordion>
+            <Toaster
+                position="top-center"
+                reverseOrder={false}
+            />
+            <SuscribePopUp open={open} setOpen={setOpen} handleClose={handleClose}/>
         </ContentContainer>
     )
 }

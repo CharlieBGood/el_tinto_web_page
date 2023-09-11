@@ -5,7 +5,8 @@ import FlexContainer from "../../atoms/FlexContainer";
 import { Toaster, toast } from "react-hot-toast";
 import { useLocation, useSearchParams } from "react-router-dom";
 import { CircularProgress } from "@mui/material";
-import { Helmet } from 'react-helmet-async';
+import { useExitIntent } from "use-exit-intent";
+import SuscribePopUp from "../SuscribePopUp";
 
 
 const TintoContainer = styled(FlexContainer)`
@@ -21,6 +22,16 @@ const TodaysTinto = () => {
     const { hash } = useLocation();
     const [tintoContent, setTintoContent] = useState<string>('')
     const [showSpinner, setShowSpinner] = useState<boolean>(true)
+    const [open, setOpen] = useState(false);
+    const { registerHandler, unsubscribe } = useExitIntent({
+        "desktop": {
+            "triggerOnMouseLeave": true,
+        },
+        "mobile": {
+            "triggerOnIdle": true,
+            "delayInSecondsToTrigger": 10
+        }
+    })
 
     useEffect(() => {
         getDailyMail({date: searchParams.get('date') || ""})
@@ -36,6 +47,20 @@ const TodaysTinto = () => {
             document.getElementById(hash.substring(1))?.scrollIntoView({behavior: 'auto'});
         }
     }, [tintoContent])
+
+    const handleClose = (isSubscription: boolean) => {
+        if (isSubscription){
+            toast.success('¡Bienvenido a El Tinto!')
+        }
+        setOpen(false);
+
+        unsubscribe();
+    };
+
+    registerHandler({
+        id: 'openModal',
+        handler: () => setOpen(true),
+    })
 
     const Spinner = () => {
         return(
@@ -58,6 +83,7 @@ const TodaysTinto = () => {
                 position="top-center"
                 reverseOrder={false}
             />
+            <SuscribePopUp open={open} setOpen={setOpen} handleClose={handleClose}/>
         </TintoContainer>
     )
 }

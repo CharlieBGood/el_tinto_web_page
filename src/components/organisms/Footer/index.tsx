@@ -19,10 +19,10 @@ const Footer = () => {
                     Copyright © El Tinto 2023 Todos los derechos reservados.
                 </Typography>
                 <Typography variant="subtitle2" textAlign='center' margin='20px 0 0 0'>
-                    ¿Tienes alguna sugerencia o quisieras que incluyeramos algo nuevo?
+                    ¿Tiene alguna sugerencia o quisiera que incluyeramos algo nuevo?
                 </Typography>
                 <Typography variant="subtitle2" textAlign='center'>
-                    Escríbenos a <a href='mailto:info@eltinto.xyz' style={{color: '#FFFFFF'}}>info@eltinto.xyz</a> y te daremos respuesta antes de que se te enfríe el tintico.
+                    Escríbanos a <a href='mailto:info@eltinto.xyz' style={{color: '#FFFFFF'}}>info@eltinto.xyz</a> y le daremos respuesta antes de que se le enfríe el tintico.
                 </Typography>
                 <FooterLine />
             </FlexContainer>

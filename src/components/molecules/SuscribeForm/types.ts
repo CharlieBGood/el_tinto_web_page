@@ -5,4 +5,11 @@ export type SuscribeProps = {
     referral_code?: string;
     utm_source?:string;
     medium?:string;
-  };
+};
+
+export type SuscribeFormProps = {
+  navigateToSuscribeConfirmation?: Function;
+  handlePopUpClose?: Function;
+  searchParams?: any;
+  popUp: boolean;
+}

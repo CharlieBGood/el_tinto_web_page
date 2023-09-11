@@ -6258,6 +6258,11 @@ jiti@^1.18.2:
   resolved "https://registry.npmjs.org/jiti/-/jiti-1.18.2.tgz"
   integrity sha512-QAdOptna2NYiSSpv0O/BwoHBSmz4YhpzJHyi+fnMRTXFjp7B8i/YG5Z8IfusxB1ufjcD2Sre1F3R+nX3fvy7gg==
 
+js-cookie@^3.0.1:
+  version "3.0.5"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.5.tgz#0b7e2fd0c01552c58ba86e0841f94dc2557dcdbc"
+  integrity sha512-cEiJEAEoIbWfCZYKWhVwFuvPX1gETRYPw6LlaTKoxD3s2AkXzkCjnp6h0V77ozyqj0jakteJ4YqDJT830+lVGw==
+
 js-sdsl@^4.1.4:
   version "4.4.0"
   resolved "https://registry.npmjs.org/js-sdsl/-/js-sdsl-4.4.0.tgz"
@@ -9325,6 +9330,13 @@ url-parse@^1.5.3:
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"
+
+use-exit-intent@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/use-exit-intent/-/use-exit-intent-1.0.7.tgz#23c260ff9e892f8b7cd104510ce5e0630586ce90"
+  integrity sha512-oBuohZtZ5cgAtPvjCb7Ds/zsqhdGsONdIUOV3VIO3XY9iX5+Kfl3MGCnwcCBtRpheblOA12S5R0yCuDglxkacA==
+  dependencies:
+    js-cookie "^3.0.1"
 
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"

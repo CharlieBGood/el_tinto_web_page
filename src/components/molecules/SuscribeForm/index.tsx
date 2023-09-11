@@ -5,10 +5,9 @@ import { Button, IconButton, Tooltip, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import THEME from '../../../utils/styledTheme';
 import HelpIcon from '@mui/icons-material/Help';
-import { SuscribeProps } from "./types";
+import { SuscribeFormProps, SuscribeProps } from "./types";
 import { postRegister, postUserVisits } from "../../../services";
 import { Toaster, toast } from "react-hot-toast";
-import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
 import ReactGA4 from "react-ga4";
 
 const FormTextFieldElement = styled(TextFieldElement)`
@@ -20,22 +19,21 @@ const FormTextFieldElement = styled(TextFieldElement)`
     }
 `
 
-const SuscribeFormContainer = styled(FlexContainer)`
-    padding: 6%;
-    width: 80%;
+const SuscribeFormContainer = styled(FlexContainer)<{popUp: boolean}>`
+    padding: ${props => props.popUp ? '10px 6% 6%' : '6%'};
+    width: 100%;
     margin: 0 auto;
     @media only screen and (max-width: 768px) {
         width: 100%;
     }
 `
 
-const SuscribeForm = () => {
+const SuscribeForm: React.FC<SuscribeFormProps> = ({navigateToSuscribeConfirmation, searchParams, popUp, handlePopUpClose}) => {
 
-    const navigate = useNavigate();
-
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-    const [searchParams] = useSearchParams();
-    const referral_code = searchParams.get('referral_code')
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const referralCodeParam = searchParams !== undefined ? searchParams.get('referral_code') : null;
+    const utmSourceParam = searchParams !== undefined ? searchParams.get('utm_source') || '' : '';
+    const mediumParam = searchParams !== undefined ? searchParams.get('medium') || '' : '';
 
     useEffect(() => {
         function handleWindowResize() {
@@ -51,20 +49,18 @@ const SuscribeForm = () => {
 
     useEffect(() => {
 
-        if (referral_code !== null){
+        if (referralCodeParam !== null){
             postUserVisits({
-                user: referral_code,
+                user: referralCodeParam,
                 type: "SP"
             })
         }
-    }, [referral_code]);
+    }, [referralCodeParam]);
 
     
     const onSubmit = (data: SuscribeProps) => {
         postRegister(data)
         .then(response => {
-
-            const params = new URLSearchParams(response.data);
 
             ReactGA4.event({
                 category: "User Creation",
@@ -72,75 +68,86 @@ const SuscribeForm = () => {
                 label: "suscription"
             });
 
-            navigate({
-                pathname: '/suscripcion-confirmada',
-                search: `?${createSearchParams(params)}`
-            })
+            if (navigateToSuscribeConfirmation !== undefined){
+                const params = new URLSearchParams(response.data);
+                navigateToSuscribeConfirmation(params);
+            }
+
+            if (handlePopUpClose !== undefined){
+                handlePopUpClose(true)
+            }
+
         })
         .catch(error => toast.error(error.response.data.email[0]))
-
     }
 
     return(
-        <SuscribeFormContainer>
+        <SuscribeFormContainer popUp={popUp}>
             <FormContainer 
                 onSuccess={onSubmit} 
                 defaultValues={{
-                    referral_code: searchParams.get('referral_code') || undefined, 
-                    utm_source: searchParams.get('utm_source') || '',
-                    medium: searchParams.get('medium') || ''
+                    referral_code: referralCodeParam, 
+                    utm_source: utmSourceParam,
+                    medium: mediumParam
                 }}
             >
-                <FormTextFieldElement name="email" placeholder="tu@correo.com" required/>
+                <FormTextFieldElement name="email" placeholder="un@correo.com" required/>
                 {
-                    searchParams.get('referral_code') && (
+                    referralCodeParam && (
                         <FlexContainer width='100%' margin='20px 0 0 0' direction="column">
                             <Typography variant="subtitle2" margin='20px 0 10px 0'>
-                                Este es el código de quien te refirió 👀
+                                Este es el código de quien lo refirió 👀
                             </Typography>
                             <FormTextFieldElement
                                 name="referral_code"
                                 required={false}
                                 disabled
                                 variant="filled"
-                                placeholder={searchParams.get('referral_code') || ''}
+                                placeholder={referralCodeParam}
                             />
                         </FlexContainer>
                     )
                 }
-                <Typography variant="subtitle2" margin='20px 0 0 0'>
-                    ¡Ayúdanos a llegar a tu correo!
-                    {
-                        windowWidth >= 768 && (
-                            <Tooltip 
-                                title="Personalizar el correo con tu nombre nos ayuda a evitar los filtros de spam 😉" 
-                                placement="right"
-                                arrow
-                            >
-                                <IconButton>
-                                    <HelpIcon sx={{color: '#FFFFFF'}} />
-                                </IconButton>
-                            </Tooltip>
-                        )
-                    }
-                </Typography>
-                <FlexContainer margin="5px 0 0 0" width='100%' direction={windowWidth > 768 ? 'row' : 'column'}>
-                    <FormTextFieldElement 
-                        name="first_name" 
-                        placeholder="Nombre (opcional)" 
-                        sx={{margin: windowWidth > 768 ? '0 20px 0 0' : '0 0 10px 0'}} 
-                        required={false}
-                        inputProps={{ maxLength: 25 }}
-                    />
-                    <FormTextFieldElement required={false} name="last_name" placeholder="Apellido (opcional)" />
-                </FlexContainer>
+
+                {
+                    !popUp && (
+                        <>
+                        <Typography variant="subtitle2" margin='20px 0 0 0'>
+                            ¡Ayúdenos a llegar a su correo!
+                            {
+                                windowWidth >= 768 && (
+                                    <Tooltip 
+                                        title="Personalizar el correo con su nombre nos ayuda a evitar los filtros de spam 😉" 
+                                        placement="right"
+                                        arrow
+                                    >
+                                        <IconButton>
+                                            <HelpIcon sx={{color: '#FFFFFF'}} />
+                                        </IconButton>
+                                    </Tooltip>
+                                )
+                            }
+                        </Typography>
+                        <FlexContainer margin="5px 0 0 0" width='100%' direction={windowWidth > 768 ? 'row' : 'column'}>
+                            <FormTextFieldElement 
+                                name="first_name" 
+                                placeholder="Nombre (opcional)" 
+                                sx={{margin: windowWidth > 768 ? '0 20px 0 0' : '0 0 10px 0'}} 
+                                required={false}
+                                inputProps={{ maxLength: 25 }}
+                            />
+                            <FormTextFieldElement required={false} name="last_name" placeholder="Apellido (opcional)" />
+                        </FlexContainer>
+                        </>
+                    )
+                }
                 <FlexContainer width='100%' margin='20px 0 0 0' direction="column" style={{display: "none"}}>
                     <FormTextFieldElement
                         name="utm_source"
                         required={false}
                         disabled
                         variant="filled"
-                        placeholder={searchParams.get('utm_source') || ''}
+                        placeholder={utmSourceParam}
                     />
                 </FlexContainer>
                 <FlexContainer width='100%' margin='20px 0 0 0' direction="column" style={{display: "none"}}>
@@ -149,18 +156,22 @@ const SuscribeForm = () => {
                         required={false}
                         disabled
                         variant="filled"
-                        placeholder={searchParams.get('medium') || ''}
+                        placeholder={mediumParam}
                     />
                 </FlexContainer>
                 <Button 
                     variant="contained" type={'submit'}
-                    style={{width: '100%', margin: '20px 0 0 0', backgroundColor: THEME.colors.buttonColor}}
+                    style={{width: '100%', margin: '20px auto 0 auto', backgroundColor: THEME.colors.buttonColor}}
                 >
-                   ¡Únete gratis! 
+                ¡Únase gratis! 
                 </Button>
-                <Typography variant="subtitle2" margin='10px 0 0 0'>
-                    Únete a miles de personas que ya están tomando El Tinto.
-                </Typography>
+                {
+                    !popUp && (
+                        <Typography variant="subtitle2" margin='10px 0 0 0'>
+                            Únase a miles de personas que ya están tomando El Tinto.
+                        </Typography>
+                    )
+                }
             </FormContainer>
             <Toaster
                 position="top-center"

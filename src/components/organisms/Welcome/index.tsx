@@ -6,10 +6,40 @@ import { useEffect, useState } from "react";
 import Breaker from "../../atoms/Breaker";
 import Testimonials from "../../molecules/Testimonials";
 import ContentContainer from "../../atoms/ContentContainer";
+import { createSearchParams, useNavigate, useSearchParams } from "react-router-dom";
+import { useExitIntent } from "use-exit-intent";
+import toast, { Toaster } from "react-hot-toast";
+import SuscribePopUp from "../SuscribePopUp";
 
 const Welcome = () => {
 
+    const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
     const [windowWidth, setWindowWidth] = useState(window.innerWidth)
+    const [open, setOpen] = useState(false);
+    const { registerHandler, unsubscribe } = useExitIntent({
+        "desktop": {
+            "triggerOnMouseLeave": true,
+        },
+        "mobile": {
+            "triggerOnIdle": true,
+            "delayInSecondsToTrigger": 15
+        }
+    })
+    
+    const handleClose = (isSubscription: boolean) => {
+        if (isSubscription){
+            toast.success('¡Bienvenido a El Tinto!')
+        }
+        setOpen(false);
+
+        unsubscribe();
+    };
+
+    registerHandler({
+    id: 'openModal',
+    handler: () => setOpen(true),
+    })
 
     useEffect(() => {
         function handleWindowResize() {
@@ -23,6 +53,14 @@ const Welcome = () => {
         };
     }, []);
 
+    const navigateToSuscribeConfirmation = (params: any) => {
+
+        navigate({
+            pathname: '/suscripcion-confirmada',
+            search: `?${createSearchParams(params)}`
+        })
+    }
+
     return(
         <>
             <ContentContainer>
@@ -30,7 +68,7 @@ const Welcome = () => {
                     Historias importantes para gente ocupada
                 </Typography>
                 <Typography textAlign="left" variant="subtitle1" style={{margin: '5px 0 0 0'}}>
-                    Infórmate en 5 minutos. Revisamos 60+ medios y te enviamos un resumen diario a tu correo.
+                    Infórmese en 5 minutos. Revisamos 60+ medios y le enviamos un resumen diario a su correo.
                     <br></br>
                     <strong>¡Es gratis!</strong>
                 </Typography>
@@ -40,7 +78,7 @@ const Welcome = () => {
                     width="100%"
                     margin="20px 0"
                 >
-                    <SuscribeForm />
+                    <SuscribeForm navigateToSuscribeConfirmation={navigateToSuscribeConfirmation} searchParams={searchParams} popUp={false} />
                 </FlexContainer>
             </ContentContainer>
             {
@@ -96,6 +134,11 @@ const Welcome = () => {
                     <br></br>  
                     <br></br> 
                 </Typography>
+                <SuscribePopUp open={open} setOpen={setOpen} handleClose={handleClose}/>
+                <Toaster
+                    position="top-center"
+                    reverseOrder={false}
+                />
             </ContentContainer>
         </>
     )

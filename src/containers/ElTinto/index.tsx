@@ -78,14 +78,17 @@ const router = createBrowserRouter([
   }
 ])
 
-const ElTinto = () => (
-  <>
-    <Header />
-    <FlexContainer margin="0 auto" direction="column" style={{minHeight: '75vh'}}>
-      <RouterProvider router={router} />
-    </FlexContainer>
-    <Footer />
-  </>
-)
+const ElTinto = () => {
+
+  return(
+    <>
+      <Header />
+      <FlexContainer margin="0 auto" direction="column" style={{minHeight: '75vh'}}>
+        <RouterProvider router={router} />
+      </FlexContainer>
+      <Footer />
+    </>
+  )
+}
 
 export default ElTinto;

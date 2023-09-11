@@ -55,7 +55,7 @@ const Suscribe = () => {
                         <strong>¡Es gratis!</strong>
                     </SubtitleFormTypography>
                 </FormsTextContainer>
-                <SuscribeForm />
+                <SuscribeForm popUp={false}/>
             </FlexContainer>
         </ContentContainer>
     )
