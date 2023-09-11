@@ -100,3 +100,8 @@ export const getDailyMail = (getParams: ParamType) => {
 export const getNews = (id: string) => {
     return axios.get(`tinto-blocks-entries/${id}/get_web_news/`)
 }
+
+// GEOLOCATION
+export const getGeoInfo = () => {
+    return axios.get('https://ipapi.co/json/')
+}

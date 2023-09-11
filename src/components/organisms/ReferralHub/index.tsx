@@ -259,7 +259,8 @@ const ReferralHub = () => {
                                     <Card sx={{ 
                                             width: '25%', 
                                             border: referralHubInfo.milestone_status !== undefined && referralHubInfo.milestone_status[milestone.referred_users].claimed === true ? `2px solid ${THEME.colors.secondary}` : `2px solid ${THEME.colors.primary}` , 
-                                            margin: "0 3px", position: "relative" 
+                                            margin: "0 3px", 
+                                            position: "relative" 
                                         }}>
                                         <FlexContainer 
                                             height="100%"

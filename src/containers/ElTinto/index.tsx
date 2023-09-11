@@ -17,6 +17,7 @@ import Unsuscribe from "../../components/organisms/Unsuscribe";
 import ReferralHub from "../../components/organisms/ReferralHub";
 import TodaysTintoRedirect from "../../components/organisms/TodaysTintoRedirect";
 import News from "../../components/organisms/News";
+import TasteClub from "../../components/organisms/TasteClub";
 
 
 const router = createBrowserRouter([
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
   {
     path: 'referidos',
     element: <ReferralHub />
+  },
+  {
+    path: 'club-de-cata',
+    element: <TasteClub />
   }
 ])
 

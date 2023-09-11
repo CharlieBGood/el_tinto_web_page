@@ -32,6 +32,7 @@ function Header() {
             {/* <Nav.Link href="/suscribirse" style={{fontFamily: 'Arial'}}>¡Suscríbete!</Nav.Link> */}
             <Nav.Link href="/el-tinto-de-hoy" style={{fontFamily: 'Arial'}}>El Tinto de hoy</Nav.Link>
             <Nav.Link href="/faq" style={{fontFamily: 'Arial'}}>Preguntas frecuentes</Nav.Link>
+            <Nav.Link href="/club-de-cata" style={{fontFamily: 'Arial'}}>Club de Cata</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
