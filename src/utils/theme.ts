@@ -66,7 +66,10 @@ const theme = createTheme({
           cursor: "text"
         },
         root: {
-          borderRadius: '8px',
+          borderRadius: '12px',
+        },
+        formControl: {
+          fontSize: 'inherit'
         }
       }
     },
@@ -126,10 +129,20 @@ const theme = createTheme({
         }
       }
     },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          borderRadius: '4px!important'
+        }
+      }
+    },
     MuiSvgIcon: {
       styleOverrides: {
         root: {
           fill: "#FFF"
+        },
+        fontSizeMedium: {
+          fill: '#4f46e6'
         }
       }
     }

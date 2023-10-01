@@ -88,9 +88,6 @@ const ReferralHub = () => {
             setReferralHubInfo(response.data)
             setShowSpinner(false);
         })
-        .catch(() => {
-            toast.error('El usuario ingresado no existe.')
-        })
 
     }, [])
 
@@ -113,7 +110,6 @@ const ReferralHub = () => {
                 {duration: 5000, style: {textAlign: "center"}}
             )
         })
-        .catch(() => toast.error('Ha ocurrido un error, por favor contacta a soporte.'))
     }
 
     const buttonInteraction = (type: string) => {

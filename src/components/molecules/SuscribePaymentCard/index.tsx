@@ -4,12 +4,11 @@ import { SuscribePaymentCardProps } from "./types";
 import { Button } from "react-bootstrap";
 import THEME from '../../../utils/styledTheme';
 
-
 const redirectPay = (code: string | undefined) => {
     window.location.href = `https://buy.stripe.com/${code}`
 }
 
-const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, code, recommended, country}) => {
+const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, code, recommended, country, benefits, windowWidth}) => {
     return(
         <FlexContainer
             direction="column"
@@ -19,13 +18,14 @@ const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, c
                 backgroundColor: THEME.colors.primary, 
                 borderStyle: recommended ? 'solid' : 'none', 
                 borderRadius: '20px', 
-                boxShadow: recommended ? 'none' : '0 0 2px 2px #ccc'
+                boxShadow: recommended ? 'none' : '0 0 2px 2px #ccc',
+                margin: windowWidth < 768 ? '0 15%' : '0' 
             }}
         >
             {
                 recommended && (
-                    <Typography variant="subtitle2" style={{color: "#FFF", textAlign: "center", padding: '5px 10px', fontSize: '12px'}}>
-                        <span style={{fontSize: '10px'}}>★</span> Recomendado por El Tinto <span style={{fontSize: '10px'}}>★</span>
+                    <Typography variant="subtitle2" style={{color: "#FFF", textAlign: "center", padding: '5px 10px', fontSize: '10px'}}>
+                        <span style={{fontSize: '8px'}}>★</span> Recomendado por El Tinto <span style={{fontSize: '8px'}}>★</span>
                     </Typography>
                 )
             }
@@ -52,20 +52,28 @@ const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, c
                             {name}
                         </Typography>
                     </FlexContainer>
-                    <Typography style={{margin: "20px 0", fontSize: "24px", textAlign: "center"}}>
+                    <Typography style={{margin: "20px 0 0 0", fontSize: "30px", textAlign: "center"}}>
                         {price} <span style={{fontSize: "12px"}}>{country === 'CO' ? 'COP' : 'USD'}</span>
                     </Typography>
-                    <Typography variant="subtitle2" style={{padding: '0 10px', color: "#000"}}>
-                        - Ejemplo de cosas
-                    </Typography>
+                    <ul style={{padding: '0 0 0 25px'}}>
+                        {
+                            benefits.map(benefit => (
+                                <li style={{padding: '5px 5px 0 0'}}>
+                                    <Typography variant="subtitle2" style={{color: "#000", fontSize: windowWidth < 768 ? '14px' : '12px', lineHeight: '1.2'}}>
+                                        {benefit}
+                                    </Typography>
+                                </li>
+                            ))
+                        }
+                    </ul>
                 </CardContent>
                 <CardActions>
                 <Button 
                     variant="contained" type={'submit'}
-                    style={{width: '75%', margin: '40px auto 10px auto', backgroundColor: THEME.colors.primary, color: "#FFF"}}
+                    style={{width: '75%', margin: '10px auto', backgroundColor: THEME.colors.primary, color: "#FFF"}}
                     onClick={() => redirectPay(code)}
                 >
-                   ¡Únete! 
+                   ¡Únase! 
                 </Button>
                 </CardActions>
             </Card>

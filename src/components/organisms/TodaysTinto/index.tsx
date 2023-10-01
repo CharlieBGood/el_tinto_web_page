@@ -39,7 +39,6 @@ const TodaysTinto = () => {
             setTintoContent(response.data.html)
             setShowSpinner(false)
         })
-        .catch(() => {toast.error('Hubo un error en la página 😔')})
     }, [])
 
     useEffect(() => {

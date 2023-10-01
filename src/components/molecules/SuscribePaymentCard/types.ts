@@ -4,4 +4,6 @@ export type SuscribePaymentCardProps = {
     code: string | undefined;
     recommended: boolean;
     country: string;
+    benefits: Array<string>;
+    windowWidth: number;
 };

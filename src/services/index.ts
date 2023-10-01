@@ -80,6 +80,14 @@ export const postUserButtonInteraction = (data: ParamType) => {
     return axios.post('users/user_button_interaction/', data)
 }
 
+export const getMyTasteClub = (uuid: string) => {
+    return axios.get(`users/my_taste_club/${uuid}/`)
+}
+
+export const patchMyTasteClubActions = (id: number, action: string, data: ParamType) => {
+    return axios.patch(`users/my_taste_club/${id}/${action}/`, data)
+}
+
 // TEMPLATES
 
 // export const getTemplates = () => {

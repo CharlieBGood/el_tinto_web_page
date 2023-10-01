@@ -18,6 +18,7 @@ import ReferralHub from "../../components/organisms/ReferralHub";
 import TodaysTintoRedirect from "../../components/organisms/TodaysTintoRedirect";
 import News from "../../components/organisms/News";
 import TasteClub from "../../components/organisms/TasteClub";
+import MyTasteClub from "../../components/organisms/MyTasteClub";
 
 
 const router = createBrowserRouter([
@@ -80,6 +81,10 @@ const router = createBrowserRouter([
   {
     path: 'club-de-cata',
     element: <TasteClub />
+  },
+  {
+    path: 'mi-club-de-cata/:uuid',
+    element: <MyTasteClub />
   }
 ])
 

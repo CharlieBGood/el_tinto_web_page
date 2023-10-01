@@ -3,23 +3,24 @@ import FlexContainer from "../FlexContainer";
 import THEME from '../../../utils/styledTheme';
 
 const Dot = styled.span`
-    height: 10px;
-    width: 10px;
+    height: 5px;
+    width: 5px;
     background-color: #ffa414;
     border-radius: 50%;
     display: inline-block;
     margin: 0 10px;
     @media only screen and (max-width: 768px) {
-        height: 6px;
-        width: 6px;
+        height: 4px;
+        width: 4px;
     }
 `
 
 const Line = styled.hr`
     background-color: ${THEME.colors.primary};
     height: 2px;
-    width: 10%;
+    width: 25%;
     opacity: 0.75;
+    margin: 0 3%;
 `
 
 const Breaker = () => {
