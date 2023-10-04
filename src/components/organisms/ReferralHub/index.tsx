@@ -247,8 +247,8 @@ const ReferralHub = () => {
                             </FlexContainer>
                         </BookmarkRibbon>
                         <Typography variant="body1">
-                            Estás a solamente ({referralHubInfo.missing_referred_users_for_next_price}) 
-                            referidos de conseguir {referralHubInfo.pre_price_string} <strong>{referralHubInfo.price_description}</strong>.
+                            Estás a solamente ({referralHubInfo.missing_referred_users_for_next_prize}) 
+                            referidos de conseguir {referralHubInfo.pre_prize_string} <strong>{referralHubInfo.prize_description}</strong>.
                         </Typography>
                         <Typography variant="body1" style={{fontWeight: '700', margin: "20px 0"}}>
                             Tu número de referidos: {referralHubInfo.referral_count}
