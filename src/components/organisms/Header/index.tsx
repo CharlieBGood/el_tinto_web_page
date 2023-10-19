@@ -18,7 +18,7 @@ function Header() {
   return (
     <Navbar expand="lg" className='navbar navbar-light navbar-expand-sm shadow bg-white px-4'>
       <Container>
-        <Navbar.Brand href="/" className='navbar-brand ms-lg-5 strong-text a-nav'>
+        <Navbar.Brand href="/" className='navbar-brand strong-text a-nav'>
           <img 
             src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_imagotipo.png" 
             height="20" 

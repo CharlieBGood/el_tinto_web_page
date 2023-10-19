@@ -3,63 +3,74 @@ import { FlexContainer } from "../../atoms";
 import { SuscribePaymentCardProps } from "./types";
 import { Button } from "react-bootstrap";
 import THEME from '../../../utils/styledTheme';
+import styled from "styled-components";
 
 const redirectPay = (code: string | undefined) => {
     window.location.href = `https://buy.stripe.com/${code}`
 }
 
-const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, code, recommended, country, benefits, windowWidth}) => {
+const CardContainer = styled(FlexContainer)<{recommended: boolean}>`
+    
+    @media (max-width: 960px) {
+        height: auto;
+    }
+    @media (min-width: 960px) {
+        height: ${props => props.recommended ? '490' : '475'}px;
+    }
+    @media (min-width: 1920px) {
+        height: ${props => props.recommended ? '510' : '495'}px;
+    }
+`
+
+const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, image, code, recommended, benefits, windowWidth}) => {
     return(
-        <FlexContainer
+        <CardContainer
             direction="column"
             alignItems="center"
+            margin={recommended && windowWidth > 960 ? "0" : "15px 0 0 0"}
+            padding={recommended ? "0 0 2px 0" : "0"}
+            recommended={recommended}
             style={{
                 borderColor: THEME.colors.primary,
                 backgroundColor: THEME.colors.primary, 
                 borderStyle: recommended ? 'solid' : 'none', 
                 borderRadius: '20px', 
-                boxShadow: recommended ? 'none' : '0 0 2px 2px #ccc',
-                margin: windowWidth < 768 ? '0 15%' : '0' 
+                boxShadow: recommended ? 'none' : '0 0 2px 2px #ccc'
             }}
         >
             {
                 recommended && (
-                    <Typography variant="subtitle2" style={{color: "#FFF", textAlign: "center", padding: '5px 10px', fontSize: '10px'}}>
+                    <Typography variant="subtitle2" style={{color: "#FFF", textAlign: "center", fontSize: '12px'}}>
                         <span style={{fontSize: '8px'}}>★</span> Recomendado por El Tinto <span style={{fontSize: '8px'}}>★</span>
                     </Typography>
                 )
             }
-            <Card 
-                sx={{ 
-                    borderRadius: '20px', 
-                }}>
-                <CardContent style={{padding: '0', position: "relative"}}>
-                    <FlexContainer style={{alignItems: "center"}}>
-                        <img
-                            src="/images/taste_club/coffee_bean.png"
-                            alt="prize"
-                            style={{display: "block", width: '100%'}}
-                        />
+            <Card sx={{ borderRadius: '20px'}} style={{width: recommended ? "98%" : "100%", height: "100%", display: "grid"}}>
+                <CardContent style={{padding: 0}}>
+                    <FlexContainer
+                        style={{
+                            alignItems: "center", backgroundImage: `url(${image})`, backgroundSize: "cover", 
+                            backgroundPosition: "center", height: "131px", minWidth: "271"
+                        }}
+                    >
                         <Typography 
+                            variant="h2"
                             style={{
-                                position: "absolute", 
-                                color: "#FFF", 
-                                fontSize: "24px", 
-                                textAlign: "center", 
-                                fontWeight: "700",
-                                padding: "0 20px"
+                                color: "#FFF",
+                                textAlign: "center",
+                                margin: "0 auto",
                             }}>
                             {name}
                         </Typography>
                     </FlexContainer>
-                    <Typography style={{margin: "20px 0 0 0", fontSize: "30px", textAlign: "center"}}>
-                        {price} <span style={{fontSize: "12px"}}>{country === 'CO' ? 'COP' : 'USD'}</span>
+                    <Typography variant="h2" style={{margin: "25px 0 0 0", textAlign: "center", fontWeight: '400'}}>
+                        {price} <span style={{fontSize: "12px"}}>COP</span>
                     </Typography>
-                    <ul style={{padding: '0 0 0 25px'}}>
+                    <ul style={{paddingLeft: '2.5rem'}}>
                         {
                             benefits.map(benefit => (
                                 <li style={{padding: '5px 5px 0 0'}}>
-                                    <Typography variant="subtitle2" style={{color: "#000", fontSize: windowWidth < 768 ? '14px' : '12px', lineHeight: '1.2'}}>
+                                    <Typography variant="caption" style={{color: "#000", lineHeight: '1.2'}}>
                                         {benefit}
                                     </Typography>
                                 </li>
@@ -67,17 +78,17 @@ const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, c
                         }
                     </ul>
                 </CardContent>
-                <CardActions>
-                <Button 
-                    variant="contained" type={'submit'}
-                    style={{width: '75%', margin: '10px auto', backgroundColor: THEME.colors.primary, color: "#FFF"}}
-                    onClick={() => redirectPay(code)}
-                >
-                   ¡Únase! 
-                </Button>
+                <CardActions sx={{marginTop: "auto"}}>
+                    <Button 
+                        variant="contained" type={'submit'}
+                        style={{width: '127px', margin: windowWidth < 960 ? '50px auto 10px auto' : 'auto auto 10px auto', backgroundColor: THEME.colors.primary, color: "#FFF"}}
+                        onClick={() => redirectPay(code)}
+                    >
+                    ¡Únase! 
+                    </Button>
                 </CardActions>
             </Card>
-        </FlexContainer>
+        </CardContainer>
     )
 }
 

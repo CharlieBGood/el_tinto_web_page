@@ -1,9 +1,9 @@
 export type SuscribePaymentCardProps = {
     name: string;
     price: string;
+    image: string;
     code: string | undefined;
     recommended: boolean;
-    country: string;
     benefits: Array<string>;
     windowWidth: number;
 };
