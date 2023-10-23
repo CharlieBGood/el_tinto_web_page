@@ -145,31 +145,69 @@ const MyTasteClub = () => {
             <Typography variant="h2">
                 ¡Hola {myTasteClubInfo.user_name}!
             </Typography>
-            <Typography variant="body1" style={{marginBottom: '10px'}}>
-                Su suscripción actual:
-            </Typography>
-            <FlexContainer alignItems="center" width="100%" margin="20px 0">
-                {
-                    tiers.filter(tier => tier.tier === myTasteClubInfo.tier).map(tier => (
-                        <img src={tier.image} style={{maxWidth: '50%'}} alt="tier logo" />
-                    ))
-                }
-                <Typography textAlign="center" margin="0 auto">
-                    {
-                        myTasteClubInfo.will_renew ? 'Se renovará ' : 'Vencerá '
-                    }
-                    el <strong>{myTasteClubInfo.valid_to}</strong>
-                    {
-                        myTasteClubInfo.plan_owner && (
-                            <>
+            {
+                tiers.filter(tier => tier.tier === myTasteClubInfo.tier).map(tier => (
+                    
+                    windowWidth < 960 ? (
+                        <FlexContainer 
+                            direction="column"
+                            alignItems="center"
+                            padding="20px"
+                            margin="20px auto" 
+                            borderRadius="12px"
+                            style={{backgroundImage: `url(${tier.image})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center'}}
+                        >
+                            <Typography color="#FFF" variant="h2" textAlign="center">
+                                {tier.name}
+                            </Typography>
+                            <Typography variant="caption" textAlign="center" margin="0 auto" color="#FFF">
+                                {
+                                    myTasteClubInfo.will_renew ? 'Se renovará ' : 'Vencerá '
+                                }
+                                el <strong>{myTasteClubInfo.valid_to}</strong>
+                                {
+                                    myTasteClubInfo.plan_owner && (
+                                        <>
+                                            <br></br>
+                                            Este plan es auspiciado por <strong>{myTasteClubInfo.plan_owner}</strong>
+                                        </>
+                                    )
+                                }
+                            </Typography>
+                        </FlexContainer>
+                    ) : (
+                        <FlexContainer width="100%" alignItems="center">
+                            <FlexContainer 
+                                direction="column"
+                                alignItems="center"
+                                width="50%"
+                                padding="20px"
+                                margin="20px auto" 
+                                borderRadius="12px"
+                                style={{backgroundImage: `url(${tier.image})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: "center"}}
+                            >
+                                <Typography variant="h2" color="#FFF" textAlign="center">
+                                    {tier.name}
+                                </Typography>
+                                {
+                                    myTasteClubInfo.plan_owner && (
+                                        <Typography variant="caption" color="#FFF" textAlign="center">
+                                            Este plan es auspiciado por <strong>{myTasteClubInfo.plan_owner}</strong>
+                                        </Typography>
+                                    )
+                                }
+                            </FlexContainer>
+                            <Typography width="50%" textAlign="center">
+                                Su plan {myTasteClubInfo.will_renew ? 'se renovará ' : 'vencerá '} el
                                 <br></br>
-                                <br></br>
-                                Este plan es auspiciado por <strong>{myTasteClubInfo.plan_owner}</strong>
-                            </>
-                        )
-                    }
-                </Typography>
-            </FlexContainer>
+                                <strong>{myTasteClubInfo.valid_to}</strong>
+                            </Typography>
+                        </FlexContainer>
+                        
+                    )
+
+                ))
+            }
             {
                 myTasteClubInfo.is_main_account && (
                     <>
