@@ -115,6 +115,7 @@ const theme = createTheme({
         },
         root: {
           borderRadius: '12px',
+          fontSize: '16px !important'
         },
         formControl: {
           fontSize: 'inherit'

@@ -34,7 +34,7 @@ const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, i
                 borderColor: THEME.colors.primary,
                 backgroundColor: THEME.colors.primary, 
                 borderStyle: recommended ? 'solid' : 'none', 
-                borderRadius: '20px', 
+                borderRadius: '36px', 
                 boxShadow: recommended ? 'none' : '0 0 2px 2px #ccc'
             }}
         >
@@ -45,7 +45,7 @@ const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, i
                     </Typography>
                 )
             }
-            <Card sx={{ borderRadius: '20px'}} style={{width: recommended ? "98%" : "100%", height: "100%", display: "grid"}}>
+            <Card sx={{ borderRadius: '36px'}} style={{width: recommended ? "98%" : "100%", height: "100%", display: "grid"}}>
                 <CardContent style={{padding: 0}}>
                     <FlexContainer
                         style={{
@@ -64,7 +64,7 @@ const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, i
                         </Typography>
                     </FlexContainer>
                     <Typography variant="h2" style={{margin: "25px 0 0 0", textAlign: "center", fontWeight: '400'}}>
-                        {price} <span style={{fontSize: "12px"}}>COP</span>
+                        {price} <span style={{fontSize: "12px"}}>COP/mes</span>
                     </Typography>
                     <ul style={{paddingLeft: '2.5rem'}}>
                         {

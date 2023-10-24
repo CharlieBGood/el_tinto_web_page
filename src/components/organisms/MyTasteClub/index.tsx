@@ -338,7 +338,7 @@ const MyTasteClub = () => {
                                                 width: windowWidth < 768 ? "100%" : "50%",
                                                 backgroundColor: "#FFF",
                                                 borderRadius: '12px',
-                                                border: 'none'
+                                                border: 'none',
                                             }}
                                         />
                                         <SelectElement
@@ -351,7 +351,8 @@ const MyTasteClub = () => {
                                                 backgroundColor: "#FFF",
                                                 borderRadius: '12px',
                                                 border: 'none',
-                                                margin: windowWidth < 768 ? "20px 0 0 0%" : "0 0 0 10px"
+                                                margin: windowWidth < 768 ? "20px 0 0 0%" : "0 0 0 10px",
+                                                font: 'inherit'
                                             }}
                                         />
                                     </FlexContainer>
