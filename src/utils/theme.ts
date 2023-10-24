@@ -12,17 +12,51 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: '"Arial"',
+    h1: {
+      fontWeight: 700,
+      '@media (max-width:960px)': {
+        fontSize: '32px',
+      },
+      '@media (min-width:960px)': {
+        fontSize: '57px',
+      },
+      '@media (min-width:1920px)': {
+        fontSize: '90px',
+      }
+    },
     h2: {
-      fontSize: '2.2rem',
-      fontWeight: '700',
-      '@media (max-width:768px)': {
-        fontSize: '1.6rem'
+      fontWeight: 700,
+      '@media (max-width:960px)': {
+        fontSize: '30px',
+      },
+      '@media (min-width:960px)': {
+        fontSize: '35px',
+      },
+      '@media (min-width:1920px)': {
+        fontSize: '45px',
+      }
+    },
+    h3: {
+      fontWeight: 700,
+      '@media (max-width:960px)': {
+        fontSize: '22px',
+      },
+      '@media (min-width:960px)': {
+        fontSize: '30px',
+      },
+      '@media (min-width:1920px)': {
+        fontSize: '35px',
       }
     },
     body1: {
-      fontSize: '18px',
-      '@media (max-width:768px)': {
-        fontSize: '16px'
+      '@media (max-width:960px)': {
+        fontSize: '16px',
+      },
+      '@media (min-width:960px)': {
+        fontSize: '21px',
+      },
+      '@media (min-width:1920px)': {
+        fontSize: '26px',
       }
     },
     body2: {
@@ -36,10 +70,24 @@ const theme = createTheme({
       }
     },
     subtitle2: {
-      fontSize: '16px',
       color: '#FFFFFF',
-      '@media (max-width:768px)': {
-        fontSize: '14px'
+      '@media (max-width:960px)': {
+        fontSize: '14px',
+      },
+      '@media (min-width:960px)': {
+        fontSize: '16px',
+      },
+    },
+    caption: {
+      color: '#FFFFFF',
+      '@media (max-width:960px)': {
+        fontSize: '14px',
+      },
+      '@media (min-width:960px)': {
+        fontSize: '12px',
+      },
+      '@media (min-width:1920px)': {
+        fontSize: '12px',
       }
     },
     overline: {
@@ -66,7 +114,11 @@ const theme = createTheme({
           cursor: "text"
         },
         root: {
-          borderRadius: '8px',
+          borderRadius: '12px',
+          fontSize: '16px !important'
+        },
+        formControl: {
+          fontSize: 'inherit'
         }
       }
     },
@@ -126,10 +178,20 @@ const theme = createTheme({
         }
       }
     },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          borderRadius: '4px!important'
+        }
+      }
+    },
     MuiSvgIcon: {
       styleOverrides: {
         root: {
           fill: "#FFF"
+        },
+        fontSizeMedium: {
+          fill: '#4f46e6'
         }
       }
     }

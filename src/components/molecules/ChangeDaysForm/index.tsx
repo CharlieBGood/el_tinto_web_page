@@ -97,7 +97,6 @@ const ChangeDaysForm: React.FC<ChangeDaysFormProps> = ({setPageState}) => {
                 setPageState(2);
             }
         })
-        .catch(error => toast.error(error.response.data.email[0]))
     }
 
     return(

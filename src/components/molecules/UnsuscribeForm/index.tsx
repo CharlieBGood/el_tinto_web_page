@@ -55,7 +55,6 @@ const UnsuscribeForm = () => {
             await delay(3000);
             window.location.replace('/')
         })
-        .catch(error => toast.error(error.response.data.email[0]))
     }
 
     return(

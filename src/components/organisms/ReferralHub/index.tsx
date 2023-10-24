@@ -88,9 +88,6 @@ const ReferralHub = () => {
             setReferralHubInfo(response.data)
             setShowSpinner(false);
         })
-        .catch(() => {
-            toast.error('El usuario ingresado no existe.')
-        })
 
     }, [])
 
@@ -113,7 +110,6 @@ const ReferralHub = () => {
                 {duration: 5000, style: {textAlign: "center"}}
             )
         })
-        .catch(() => toast.error('Ha ocurrido un error, por favor contacta a soporte.'))
     }
 
     const buttonInteraction = (type: string) => {
@@ -259,7 +255,8 @@ const ReferralHub = () => {
                                     <Card sx={{ 
                                             width: '25%', 
                                             border: referralHubInfo.milestone_status !== undefined && referralHubInfo.milestone_status[milestone.referred_users].claimed === true ? `2px solid ${THEME.colors.secondary}` : `2px solid ${THEME.colors.primary}` , 
-                                            margin: "0 3px", position: "relative" 
+                                            margin: "0 3px", 
+                                            position: "relative" 
                                         }}>
                                         <FlexContainer 
                                             height="100%"

@@ -42,7 +42,6 @@ const News = () => {
             setTintoContent(response.data.html)
             setShowSpinner(false)
         })
-        .catch(() => {toast.error('Hubo un error en la página 😔')})
     }, [])
 
     const handleClose = (isSubscription: boolean) => {

@@ -76,9 +76,7 @@ const SuscribeForm: React.FC<SuscribeFormProps> = ({navigateToSuscribeConfirmati
             if (handlePopUpClose !== undefined){
                 handlePopUpClose(true)
             }
-
         })
-        .catch(error => toast.error(error.response.data.email[0]))
     }
 
     return(

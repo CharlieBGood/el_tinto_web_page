@@ -18,7 +18,7 @@ function Header() {
   return (
     <Navbar expand="lg" className='navbar navbar-light navbar-expand-sm shadow bg-white px-4'>
       <Container>
-        <Navbar.Brand href="/" className='navbar-brand ms-lg-5 strong-text a-nav'>
+        <Navbar.Brand href="/" className='navbar-brand strong-text a-nav'>
           <img 
             src="https://el-tinto-utils.s3.amazonaws.com/logos/el_tinto_imagotipo.png" 
             height="20" 
@@ -32,6 +32,7 @@ function Header() {
             {/* <Nav.Link href="/suscribirse" style={{fontFamily: 'Arial'}}>¡Suscríbete!</Nav.Link> */}
             <Nav.Link href="/el-tinto-de-hoy" style={{fontFamily: 'Arial'}}>El Tinto de hoy</Nav.Link>
             <Nav.Link href="/faq" style={{fontFamily: 'Arial'}}>Preguntas frecuentes</Nav.Link>
+            <Nav.Link href="/club-de-cata" style={{fontFamily: 'Arial'}}>Club de Cata</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>
