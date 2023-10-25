@@ -54,7 +54,7 @@ const TasteClub = () => {
             code: process.env.REACT_APP_COFFEE_BEAN_BUY_CODE,
             recommended: false,
             benefits: [
-                '1 Tinto dominguero al mes.',
+                '1 Tinto Dominguero al mes.',
                 'Informe El Tinto.'
             ]
         },
@@ -93,7 +93,7 @@ const TasteClub = () => {
             benefits: [
                 'Todos los Tintos Domingueros.',
                 'Todos los Tintos de edición especial.',
-                '2 taller de El Tinto al año.',
+                '2 talleres de El Tinto al año.',
                 'Personalización de la hora de llegada.',
                 'Acceso prioritario a desarrollos nuevos.',
                 'Regale estos beneficios a 3 personas.',
