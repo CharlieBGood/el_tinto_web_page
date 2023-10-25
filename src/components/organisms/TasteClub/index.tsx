@@ -172,7 +172,7 @@ const TasteClub = () => {
                             </FlexContainer>
                             <Typography variant="body1" margin="10px 0 0">
                                 Escoja cualquiera de las cuatro opciones y haga click en "Únase". 
-                                O haga una donación única.
+                                O haga una donación única al final de esta página.
                             </Typography>
                         </FlexContainer>
                     </Grid>
@@ -297,7 +297,7 @@ const TasteClub = () => {
                                     alignSelf="flex-end"
                                 >
                                     <Typography variant='h3' fontWeight="400" style={{fontSize: "18px"}}>
-                                        Los talleres los hacemos en periodismo, escritura, ciencia de datos, desarrollo web, 
+                                        Los talleres los hacemos en escritura, ciencia de datos, desarrollo web, 
                                         diseño, periodismo, y periodismo de datos.  
                                         <span style={{color: THEME.colors.primary, fontWeight: 700}}>&nbsp;Mejor dicho, le enseñamos 
                                         todo lo que nosotros sabemos hacer.</span>
