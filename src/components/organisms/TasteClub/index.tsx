@@ -171,8 +171,8 @@ const TasteClub = () => {
                                 </Typography>
                             </FlexContainer>
                             <Typography variant="body1" margin="10px 0 0">
-                                Escoja cualquiera de las cuatro opciones y haga click en "Únase". 
-                                O haga una donación única al final de esta página.
+                                Escoja cualquiera de las cuatro opciones y haga click en "Únase", 
+                                o haga una donación única al final de esta página.
                             </Typography>
                         </FlexContainer>
                     </Grid>
