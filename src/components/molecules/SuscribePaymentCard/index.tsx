@@ -45,7 +45,7 @@ const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, i
                     </Typography>
                 )
             }
-            <Card sx={{ borderRadius: '36px'}} style={{width: recommended ? "98%" : "100%", height: "100%", display: "grid"}}>
+            <Card sx={{ borderRadius: '36px'}} style={{width: recommended ? "98%" : "100%", height: "100%", display: "grid", minHeight: "500px"}}>
                 <CardContent style={{padding: 0}}>
                     <FlexContainer
                         style={{
@@ -78,7 +78,7 @@ const SuscribePaymentCard: React.FC<SuscribePaymentCardProps> = ({name, price, i
                         }
                     </ul>
                 </CardContent>
-                <CardActions sx={{marginTop: "auto"}}>
+                <CardActions>
                     <Button 
                         variant="contained" type={'submit'}
                         style={{width: '127px', margin: windowWidth < 960 ? '50px auto 10px auto' : 'auto auto 10px auto', backgroundColor: THEME.colors.primary, color: "#FFF"}}
